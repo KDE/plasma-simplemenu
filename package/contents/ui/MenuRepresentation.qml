@@ -60,6 +60,7 @@ FocusScope {
         searchField.text = "";
 
         pageListScrollArea.focus = true;
+        pageList.currentIndex = 1;
         pageList.currentItem.itemGrid.currentIndex = -1;
     }
 
