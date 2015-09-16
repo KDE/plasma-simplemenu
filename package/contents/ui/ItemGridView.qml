@@ -186,7 +186,7 @@ FocusScope {
             Timer {
                 id: resetAnimationDurationTimer
 
-                interval: 120
+                interval: 80
                 repeat: false
 
                 onTriggered: {
