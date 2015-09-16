@@ -110,7 +110,7 @@ FocusScope {
             var cPos = mapToItem(gridView.contentItem, event.x, event.y);
             var item = gridView.itemAt(cPos.x, cPos.y);
 
-            if (item && item != kicker.dragSource && kicker.dragSource.parent == gridView.contentItem) {
+            if (item && item != kicker.dragSource && kicker.dragSource && kicker.dragSource.parent == gridView.contentItem) {
                 item.GridView.view.model.moveRow(dragSource.itemIndex, item.itemIndex);
             }
 
@@ -124,6 +124,29 @@ FocusScope {
             onPressed: {
                 pressX = mouse.x;
                 pressY = mouse.y;
+            }
+
+            onPressAndHold: {
+                if (!dragEnabled) {
+                    pressX = -1;
+                    pressY = -1;
+                    return;
+                }
+
+                var cPos = mapToItem(gridView.contentItem, mouse.x, mouse.y);
+                var item = gridView.itemAt(cPos.x, cPos.y);
+
+                if (!item) {
+                    return;
+                }
+
+                if (!dragHelper.isDrag(pressX, pressY, mouse.x, mouse.y)) {
+                    kicker.dragSource = item;
+                    dragHelper.startDrag(kicker, item.url);
+                }
+
+                pressX = -1;
+                pressY = -1;
             }
 
             onReleased: {
@@ -149,13 +172,6 @@ FocusScope {
                 } else {
                     gridView.currentIndex = item.itemIndex;
                     itemGrid.focus = (currentIndex != -1)
-
-                    if (dragEnabled && pressX != -1 && dragHelper.isDrag(pressX, pressY, mouse.x, mouse.y)) {
-                        kicker.dragSource = item;
-                        dragHelper.startDrag(kicker, item.url);
-                        pressX = -1;
-                        pressY = -1;
-                    }
                 }
             }
 

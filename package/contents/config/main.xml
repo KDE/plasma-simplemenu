@@ -27,7 +27,7 @@
       <default>preferred://browser,kontact.desktop,systemsettings.desktop,org.kde.dolphin.desktop,ktp-contactlist.desktop,org.kde.kate.desktop</default>
     </entry>
     <entry name="favoriteSystemActions" type="StringList">
-      <default>logout,reboot,shutdown</default>
+      <default>logout,lock-screen,reboot,shutdown</default>
     </entry>
     <entry name="hiddenApplications" type="StringList">
       <default></default>

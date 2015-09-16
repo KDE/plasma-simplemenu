@@ -189,7 +189,7 @@ void FavoritesModel::refresh()
             newFavorites << entry->id();
 
             // FIXME TODO HACK: Proper size limit impl.
-            if (newFavorites.count() == 16) {
+            if (newFavorites.count() == 12) {
                 break;
             }
         } else if (entry) {

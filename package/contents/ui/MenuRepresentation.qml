@@ -30,7 +30,7 @@ FocusScope {
 
     focus: true
 
-    property int iconSize: units.iconSizes.huge
+    property int iconSize: units.iconSizes.large
     property int cellSize: iconSize + theme.mSize(theme.defaultFont).height
         + (2 * units.smallSpacing)
         + (2 * Math.max(highlightItemSvg.margins.top + highlightItemSvg.margins.bottom,
@@ -64,6 +64,57 @@ FocusScope {
         pageList.currentItem.itemGrid.currentIndex = -1;
     }
 
+    Component {
+        id: systemFavoritesGrid
+
+        ItemGridView {
+            id: gridView
+
+            anchors.fill: parent
+
+            cellWidth: cellSize
+            cellHeight: cellSize
+
+            horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
+            dragEnabled: true
+
+            model: systemFavorites
+
+            onCurrentIndexChanged: {
+                if (currentIndex != -1) {
+                    pageListScrollArea.focus = true;
+                }
+            }
+
+            onKeyNavRight: {
+                var newIndex = pageList.currentIndex + 1;
+
+                if (newIndex == pageList.count) {
+                    newIndex = 0;
+                }
+
+                pageList.currentIndex = newIndex;
+
+                var currentGrid = pageList.currentItem.itemGrid;
+                currentGrid.tryActivate(3, 0);
+            }
+
+            onKeyNavLeft: {
+                var newIndex = pageList.currentIndex - 1;
+
+                if (newIndex < 0) {
+                    newIndex = (pageList.count - 1);
+                }
+
+                pageList.currentIndex = newIndex;
+
+                var currentGrid = pageList.currentItem.itemGrid;
+                currentGrid.tryActivate(3, 3);
+            }
+        }
+    }
 
     PlasmaComponents.TextField {
         id: searchField
@@ -118,6 +169,7 @@ FocusScope {
 
             orientation: Qt.Horizontal
             snapMode: ListView.SnapOneItem
+            cacheBuffer: (cellSize * 4) * 3
 
             model: rootModel.modelForRow(0)
 
@@ -128,7 +180,11 @@ FocusScope {
             }
 
             onCurrentItemChanged: {
-                currentItem.itemGrid.focus = true;
+                if (currentItem.loaderGrid && currentItem.loaderGrid.currentIndex != -1) {
+                    currentItem.loaderGrid.focus = true;
+                } else {
+                    currentItem.itemGrid.focus = true;
+                }
             }
 
             onModelChanged: {
@@ -143,11 +199,17 @@ FocusScope {
                 }
             }
 
+            function cycle() {
+                enabled = false;
+                enabled = true;
+            }
+
             delegate: Item {
                 width: cellSize * 4
                 height: cellSize * 4
 
                 property Item itemGrid: gridView
+                property Item loaderGrid: systemFavoritesGridLoader.item
 
                 ItemGridView {
                     id: gridView
@@ -159,6 +221,8 @@ FocusScope {
 
                     horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
                     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
+                    dragEnabled: (index == 0)
 
                     model: searching ? runnerModel.modelForRow(index) : rootModel.modelForRow(0).modelForRow(index)
 
@@ -183,8 +247,8 @@ FocusScope {
 
                         pageList.currentIndex = newIndex;
 
-                        var currentGrid = pageList.currentItem.itemGrid;
-                        currentGrid.tryActivate(cRow, 0);
+                        var currentGrid = (index == 1 && cRow == 3) ? pageList.currentItem.loaderGrid : pageList.currentItem.itemGrid;
+                        currentGrid.tryActivate((index == 1) ? ((cRow == 3) ? 0 : cRow) : cRow, 0);
                     }
 
                     onKeyNavLeft: {
@@ -197,8 +261,15 @@ FocusScope {
 
                         pageList.currentIndex = newIndex;
 
-                        var currentGrid = pageList.currentItem.itemGrid;
-                        currentGrid.tryActivate(cRow, 3);
+                        var currentGrid = (index == 1 && cRow == 3) ? pageList.currentItem.loaderGrid : pageList.currentItem.itemGrid;
+                        currentGrid.tryActivate((index == 1) ? ((cRow == 3) ? 0 : cRow) : cRow, 3);
+                    }
+
+                    onKeyNavDown: {
+                        if (index == 0 && !searching) {
+                            systemFavoritesGridLoader.item.tryActivate(0, currentCol());
+                            systemFavoritesGridLoader.focus = true;
+                        }
                     }
                 }
 
@@ -223,6 +294,39 @@ FocusScope {
                             }
 
                             pageList.currentIndex = newIndex;
+                        }
+                    }
+                }
+
+                Loader {
+                    id: systemFavoritesGridLoader
+
+                    anchors.bottom: parent.bottom
+
+                    width: cellSize * 4
+                    height: cellSize
+
+                    active: (index == 0 && !searching)
+                    sourceComponent: systemFavoritesGrid
+
+                    onFocusChanged: {
+                        if (!focus) {
+                            item.currentIndex = -1;
+                        }
+                    }
+
+                    Connections {
+                        target: systemFavoritesGridLoader.item
+
+                        onKeyNavUp: {
+                            pageList.currentItem.itemGrid.tryActivate(pageList.currentItem.itemGrid.lastRow(),
+                                systemFavoritesGridLoader.item.currentCol());
+                        }
+
+                        onCurrentIndexChanged: {
+                            if (systemFavoritesGridLoader.item.currentIndex != -1) {
+                                systemFavoritesGridLoader.focus = true;
+                            }
                         }
                     }
                 }
@@ -328,5 +432,6 @@ FocusScope {
     Component.onCompleted: {
         kicker.reset.connect(reset);
         windowSystem.hidden.connect(reset);
+        dragHelper.dropped.connect(pageList.cycle);
     }
 }

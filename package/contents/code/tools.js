@@ -41,16 +41,23 @@ function createFavoriteAction(favoriteModel, favoriteId) {
         return null;
     }
 
+    // FIXME TODO HACK
+    if (favoriteModel != globalFavorites) {
+        return null;
+    }
+
     var action = {};
 
     if (favoriteModel.isFavorite(favoriteId)) {
         action.text = i18n("Remove from Favorites");
         action.icon = "list-remove";
         action.actionId = "_kicker_favorite_remove";
-    } else if (favoriteModel.count < 16) { // FIXME TODO HACK
+    } else if (favoriteModel.count < 12) { // FIXME TODO HACK
         action.text = i18n("Add to Favorites");
         action.icon = "bookmark-new";
         action.actionId = "_kicker_favorite_add";
+    } else { // FIXME TODO HACK
+        return null;
     }
 
     action.actionArgument = { favoriteModel: favoriteModel, favoriteId: favoriteId };
