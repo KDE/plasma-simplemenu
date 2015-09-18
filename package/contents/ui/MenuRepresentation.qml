@@ -30,7 +30,7 @@ FocusScope {
 
     focus: true
 
-    property int iconSize: units.iconSizes.large
+    property int iconSize: units.iconSizes.huge
     property int cellSize: iconSize + theme.mSize(theme.defaultFont).height
         + (2 * units.smallSpacing)
         + (2 * Math.max(highlightItemSvg.margins.top + highlightItemSvg.margins.bottom,

@@ -267,7 +267,7 @@ void RootModel::refresh()
             AbstractModel *model = groupEntry->childModel();
 
             for (int i = 0; i < model->count(); ++i) {
-                AppEntry *appEntry = static_cast<AppEntry                *>(model->index(i, 0).internalPointer());
+                AppEntry *appEntry = static_cast<AppEntry*>(model->index(i, 0).internalPointer());
 
                 if (appEntry->name().isEmpty()) {
                     continue;
@@ -306,6 +306,9 @@ void RootModel::refresh()
                 ++at;
             }
         }
+
+        AppsModel *model = new AppsModel(page, false, this);
+        groups.append(new GroupEntry(this, QString(), QString(), model));
 
         groups.prepend(new GroupEntry(this, QString(), QString(), m_favorites));
 
