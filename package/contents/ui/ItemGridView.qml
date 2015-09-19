@@ -35,6 +35,8 @@ FocusScope {
     property bool dragEnabled: false
     property bool showLabels: true
 
+    property int iconSize: root.iconSize
+
     property int pressX: -1
     property int pressY: -1
 

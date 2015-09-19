@@ -70,10 +70,15 @@ FocusScope {
         ItemGridView {
             id: gridView
 
-            anchors.fill: parent
+            anchors {
+                fill: parent
+                topMargin: (units.iconSizes.huge - units.iconSizes.medium) - units.smallSpacing
+            }
 
-            cellWidth: cellSize
-            cellHeight: cellSize
+            cellWidth: cellSize - (units.iconSizes.huge - units.iconSizes.medium)
+            cellHeight: cellSize - (units.iconSizes.huge - units.iconSizes.medium)
+
+            iconSize: units.iconSizes.medium
 
             horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
             verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
@@ -301,9 +306,12 @@ FocusScope {
                 Loader {
                     id: systemFavoritesGridLoader
 
-                    anchors.bottom: parent.bottom
+                    anchors {
+                        bottom: parent.bottom
+                        horizontalCenter: parent.horizontalCenter
+                    }
 
-                    width: cellSize * 4
+                    width: (cellSize - (units.iconSizes.huge - units.iconSizes.medium)) * 4
                     height: cellSize
 
                     active: (index == 0 && !searching)
