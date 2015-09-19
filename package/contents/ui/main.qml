@@ -48,7 +48,9 @@ Item {
     property QtObject systemFavorites: rootModel.systemFavoritesModel
 
     onSystemFavoritesChanged: {
+        systemFavorites.enabled = false;
         systemFavorites.favorites = plasmoid.configuration.favoriteSystemActions;
+        systemFavorites.maxFavorites = 4;
     }
 
     function action_menuedit() {
@@ -97,6 +99,7 @@ Item {
 
         Component.onCompleted: {
             favoritesModel.favorites = plasmoid.configuration.favoriteApps;
+            favoritesModel.maxFavorites = 12;
         }
     }
 

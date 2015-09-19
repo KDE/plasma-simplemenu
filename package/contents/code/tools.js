@@ -37,12 +37,7 @@ function fillActionMenu(actionMenu, actionList, favoriteModel, favoriteId) {
 }
 
 function createFavoriteAction(favoriteModel, favoriteId) {
-    if (favoriteModel === null || favoriteId == null) {
-        return null;
-    }
-
-    // FIXME TODO HACK
-    if (favoriteModel != globalFavorites) {
+    if (favoriteModel === null || !favoriteModel.enabled || favoriteId == null) {
         return null;
     }
 
@@ -52,11 +47,11 @@ function createFavoriteAction(favoriteModel, favoriteId) {
         action.text = i18n("Remove from Favorites");
         action.icon = "list-remove";
         action.actionId = "_kicker_favorite_remove";
-    } else if (favoriteModel.count < 12) { // FIXME TODO HACK
+    } else if (favoriteModel.maxFavorites == -1 || favoriteModel.count < favoriteModel.maxFavorites) {
         action.text = i18n("Add to Favorites");
         action.icon = "bookmark-new";
         action.actionId = "_kicker_favorite_add";
-    } else { // FIXME TODO HACK
+    } else {
         return null;
     }
 

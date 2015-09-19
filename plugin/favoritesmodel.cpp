@@ -27,6 +27,8 @@
 #include <KLocalizedString>
 
 FavoritesModel::FavoritesModel(QObject *parent) : AbstractModel(parent)
+, m_enabled(true)
+, m_maxFavorites(-1)
 {
 }
 
@@ -78,6 +80,20 @@ bool FavoritesModel::trigger(int row, const QString &actionId, const QVariant &a
     return m_entryList.at(row)->run(actionId, argument);
 }
 
+bool FavoritesModel::enabled() const
+{
+    return m_enabled;
+}
+
+void FavoritesModel::setEnabled(bool enable)
+{
+    if (m_enabled != enable) {
+        m_enabled = enable;
+
+        emit enabledChanged();
+    }
+}
+
 QStringList FavoritesModel::favorites() const
 {
     return m_favorites;
@@ -94,6 +110,25 @@ void FavoritesModel::setFavorites(const QStringList& favorites)
     }
 }
 
+int FavoritesModel::maxFavorites() const
+{
+    return m_maxFavorites;
+}
+
+void FavoritesModel::setMaxFavorites(int max)
+{
+    if (m_maxFavorites != max)
+    {
+        m_maxFavorites = max;
+
+        if (m_maxFavorites != -1 && m_favorites.count() > m_maxFavorites) {
+            refresh();
+        }
+
+        emit maxFavoritesChanged();
+    }
+}
+
 bool FavoritesModel::isFavorite(const QString &id) const
 {
     return m_favorites.contains(id);
@@ -101,7 +136,11 @@ bool FavoritesModel::isFavorite(const QString &id) const
 
 void FavoritesModel::addFavorite(const QString &id)
 {
-    if (id.isEmpty()) {
+    if (!m_enabled || id.isEmpty()) {
+        return;
+    }
+
+    if (m_maxFavorites != -1 && m_favorites.count() == m_maxFavorites) {
         return;
     }
 
@@ -125,6 +164,10 @@ void FavoritesModel::addFavorite(const QString &id)
 
 void FavoritesModel::removeFavorite(const QString &id)
 {
+    if (!m_enabled || id.isEmpty()) {
+        return;
+    }
+
     int index = m_favorites.indexOf(id);
 
     if (index != -1) {
@@ -188,8 +231,7 @@ void FavoritesModel::refresh()
             m_entryList << entry;
             newFavorites << entry->id();
 
-            // FIXME TODO HACK: Proper size limit impl.
-            if (newFavorites.count() == 12) {
+            if (m_maxFavorites != -1 && newFavorites.count() == m_maxFavorites) {
                 break;
             }
         } else if (entry) {
