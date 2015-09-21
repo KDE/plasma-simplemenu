@@ -72,7 +72,7 @@ FocusScope {
 
             anchors {
                 fill: parent
-                topMargin: (units.iconSizes.huge - units.iconSizes.medium) - units.smallSpacing
+                topMargin: (units.iconSizes.huge - units.iconSizes.medium) - (units.smallSpacing * 2)
             }
 
             cellWidth: cellSize - (units.iconSizes.huge - units.iconSizes.medium)
