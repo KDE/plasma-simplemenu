@@ -307,8 +307,10 @@ void RootModel::refresh()
             }
         }
 
-        AppsModel *model = new AppsModel(page, false, this);
-        groups.append(new GroupEntry(this, QString(), QString(), model));
+        if (page.count()) {
+            AppsModel *model = new AppsModel(page, false, this);
+            groups.append(new GroupEntry(this, QString(), QString(), model));
+        }
 
         groups.prepend(new GroupEntry(this, QString(), QString(), m_favorites));
 
