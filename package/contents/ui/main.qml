@@ -50,7 +50,7 @@ Item {
     onSystemFavoritesChanged: {
         systemFavorites.enabled = false;
         systemFavorites.favorites = plasmoid.configuration.favoriteSystemActions;
-        systemFavorites.maxFavorites = 4;
+        systemFavorites.maxFavorites = 6;
     }
 
     function action_menuedit() {
@@ -99,7 +99,7 @@ Item {
 
         Component.onCompleted: {
             favoritesModel.favorites = plasmoid.configuration.favoriteApps;
-            favoritesModel.maxFavorites = 12;
+            favoritesModel.maxFavorites = 18;
         }
     }
 

@@ -297,7 +297,7 @@ void RootModel::refresh()
         foreach(AppEntry *app, apps) {
             page.append(app);
 
-            if (at == 15) {
+            if (at == 23) {
                 at = 0;
                 AppsModel *model = new AppsModel(page, false, this);
                 groups.append(new GroupEntry(this, QString(), QString(), model));

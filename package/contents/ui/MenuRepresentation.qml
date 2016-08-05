@@ -37,8 +37,8 @@ FocusScope {
                         highlightItemSvg.margins.left + highlightItemSvg.margins.right))
     property bool searching: (searchField.text != "")
 
-    Layout.minimumWidth: cellSize * 4
-    Layout.maximumWidth: cellSize * 4
+    Layout.minimumWidth: cellSize * 6
+    Layout.maximumWidth: cellSize * 6
     Layout.minimumHeight: (cellSize * 4) + searchField.height + paginationBar.height + (2 * units.smallSpacing)
     Layout.maximumHeight: (cellSize * 4) + searchField.height + paginationBar.height + (2 * units.smallSpacing)
 
@@ -116,7 +116,7 @@ FocusScope {
                 pageList.currentIndex = newIndex;
 
                 var currentGrid = pageList.currentItem.itemGrid;
-                currentGrid.tryActivate(3, 3);
+                currentGrid.tryActivate(3, 5);
             }
         }
     }
@@ -174,7 +174,7 @@ FocusScope {
 
             orientation: Qt.Horizontal
             snapMode: ListView.SnapOneItem
-            cacheBuffer: (cellSize * 4) * 3
+            cacheBuffer: (cellSize * 6) * count
 
             model: rootModel.modelForRow(0)
 
@@ -185,6 +185,10 @@ FocusScope {
             }
 
             onCurrentItemChanged: {
+                if (!currentItem) {
+                    return;
+                }
+
                 if (currentItem.loaderGrid && currentItem.loaderGrid.currentIndex != -1) {
                     currentItem.loaderGrid.focus = true;
                 } else {
@@ -210,7 +214,7 @@ FocusScope {
             }
 
             delegate: Item {
-                width: cellSize * 4
+                width: cellSize * 6
                 height: cellSize * 4
 
                 property Item itemGrid: gridView
@@ -252,8 +256,8 @@ FocusScope {
 
                         pageList.currentIndex = newIndex;
 
-                        var currentGrid = (index == 1 && cRow == 3) ? pageList.currentItem.loaderGrid : pageList.currentItem.itemGrid;
-                        currentGrid.tryActivate((index == 1) ? ((cRow == 3) ? 0 : cRow) : cRow, 0);
+                        var currentGrid = (newIndex == 0 && cRow == 3) ? pageList.currentItem.loaderGrid : pageList.currentItem.itemGrid;
+                        currentGrid.tryActivate((newIndex == 0) ? ((cRow == 3) ? 0 : cRow) : cRow, 0);
                     }
 
                     onKeyNavLeft: {
@@ -266,8 +270,8 @@ FocusScope {
 
                         pageList.currentIndex = newIndex;
 
-                        var currentGrid = (index == 1 && cRow == 3) ? pageList.currentItem.loaderGrid : pageList.currentItem.itemGrid;
-                        currentGrid.tryActivate((index == 1) ? ((cRow == 3) ? 0 : cRow) : cRow, 3);
+                        var currentGrid = (newIndex == 0 && cRow == 3) ? pageList.currentItem.loaderGrid : pageList.currentItem.itemGrid;
+                        currentGrid.tryActivate((newIndex == 0) ? ((cRow == 3) ? 0 : cRow) : cRow, 5);
                     }
 
                     onKeyNavDown: {
@@ -311,7 +315,7 @@ FocusScope {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    width: (cellSize - (units.iconSizes.huge - units.iconSizes.medium)) * 4
+                    width: (cellSize - (units.iconSizes.huge - units.iconSizes.medium)) * 6
                     height: cellSize
 
                     active: (index == 0 && !searching)
