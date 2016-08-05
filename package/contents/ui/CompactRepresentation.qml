@@ -106,35 +106,21 @@ Item {
     MouseArea
     {
         id: mouseArea
-        property bool wasExpanded: false;
 
         anchors.fill: parent
 
         hoverEnabled: true
 
-        onPressed: {
-            if (!isDash) {
-                wasExpanded = plasmoid.expanded
-            }
-        }
-
         onClicked: {
-            if (isDash) {
-                dashWindow.toggle();
-                justOpenedTimer.start();
-            } else {
-                plasmoid.expanded = !wasExpanded;
-            }
+            dashWindow.visible = !dashWindow.visible;
         }
     }
 
     Component.onCompleted: {
-        if (isDash) {
-            dashWindow = Qt.createQmlObject("DashboardRepresentation {}", root);
-            plasmoid.activated.connect(function() {
-                dashWindow.toggle()
-                justOpenedTimer.start()
-            })
-        }
+        dashWindow = Qt.createQmlObject("MenuRepresentation {}", root);
+        dashWindow.visualParent = root;
+        plasmoid.activated.connect(function() {
+            dashWindow.visible = true;
+        });
     }
 }

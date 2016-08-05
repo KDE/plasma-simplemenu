@@ -33,15 +33,13 @@ Item {
 
     signal reset
 
-    property bool isDash: (plasmoid.pluginName == "org.kde.plasma.kickerdash")
+    property bool isDash: false
 
-    // this is a bit of a hack to prevent Plasma from spawning a dialog on its own when we're Dash
-    Plasmoid.preferredRepresentation: isDash ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
+    Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
 
-    Plasmoid.compactRepresentation: isDash ? null : compactRepresentation
-    Plasmoid.fullRepresentation: isDash ? compactRepresentation : menuRepresentation
+    Plasmoid.compactRepresentation: null
+    Plasmoid.fullRepresentation: compactRepresentation
 
-    property QtObject itemListDialogComponent: Qt.createComponent("ItemListDialog.qml");
     property Item dragSource: null
 
     property QtObject globalFavorites: rootModel.favoritesModel
@@ -55,11 +53,6 @@ Item {
 
     function action_menuedit() {
         processRunner.runMenuEditor();
-    }
-
-    function updateSvgMetrics() {
-        lineSvg.horLineHeight = lineSvg.elementSize("horizontal-line").height;
-        lineSvg.vertLineWidth = lineSvg.elementSize("vertical-line").width;
     }
 
     Component {
@@ -148,10 +141,6 @@ Item {
         id: processRunner;
     }
 
-    SimpleMenu.WindowSystem {
-        id: windowSystem;
-    }
-
     PlasmaCore.FrameSvgItem {
         id : highlightItemSvg
 
@@ -159,30 +148,6 @@ Item {
 
         imagePath: "widgets/viewitem"
         prefix: "hover"
-    }
-
-    PlasmaCore.FrameSvgItem {
-        id : listItemSvg
-
-        visible: false
-
-        imagePath: "widgets/listitem"
-        prefix: "normal"
-    }
-
-    PlasmaCore.Svg {
-        id: arrows
-
-        imagePath: "widgets/arrows"
-        size: "16x16"
-    }
-
-    PlasmaCore.Svg {
-        id: lineSvg
-        imagePath: "widgets/line"
-
-        property int horLineHeight
-        property int vertLineWidth
     }
 
     PlasmaComponents.Label {
@@ -196,42 +161,12 @@ Item {
         text: (toolTip != null) ? toolTip.text : ""
     }
 
-    Timer {
-        id: justOpenedTimer
-
-        repeat: false
-        interval: 600
-    }
-
-    Connections {
-        target: plasmoid
-
-        onExpandedChanged: {
-            if (expanded) {
-                windowSystem.monitorWindowVisibility(plasmoid.fullRepresentationItem);
-                justOpenedTimer.start();
-            } else {
-                kicker.reset();
-            }
-        }
-    }
-
     function resetDragSource() {
         dragSource = null;
     }
 
-    function enableHideOnWindowDeactivate() {
-        plasmoid.hideOnWindowDeactivate = true;
-    }
-
     Component.onCompleted: {
-        windowSystem.focusOut.connect(enableHideOnWindowDeactivate);
-        plasmoid.hideOnWindowDeactivate = true;
-
         plasmoid.setAction("menuedit", i18n("Edit Applications..."));
-
-        updateSvgMetrics();
-        theme.themeChanged.connect(updateSvgMetrics);
 
         rootModel.refreshed.connect(reset);
 

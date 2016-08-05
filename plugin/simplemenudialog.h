@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Eike Hein <hein@kde.org>                        *
+ *   Copyright (C) 2014 by David Edmundson <kde@davidedmundson.co.uk>      *
+ *   Copyright (C) 2014-2016 by Eike Hein <hein@kde.org>                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,31 +18,39 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#include "simplemenuplugin.h"
-#include "abstractmodel.h"
-#include "draghelper.h"
-#include "processrunner.h"
-#include "rootmodel.h"
-#include "runnermodel.h"
-#include "simplemenudialog.h"
-#include "systemsettings.h"
-#include "wheelinterceptor.h"
-#include "windowsystem.h"
+#ifndef SIMPLEMENUDIALOG_H
+#define SIMPLEMENUDIALOG_H
 
-#include <QtQml>
+#include <dialog.h>
 
-void SimpleMenuPlugin::registerTypes(const char *uri)
+class QScreen;
+
+class SimpleMenuDialog : public PlasmaQuick::Dialog
 {
-    Q_ASSERT(uri == QLatin1String("org.kde.plasma.private.simplemenu"));
+    Q_OBJECT
 
-    qmlRegisterType<AbstractModel>();
+    Q_PROPERTY(int offset READ offset WRITE setOffset NOTIFY offsetChanged)
+    Q_PROPERTY(Plasma::Types::Location plasmoidLocation READ plasmoidLocation WRITE setPlasmoidLocation NOTIFY plasmoidLocationChanged)
 
-    qmlRegisterType<DragHelper>(uri, 0, 1, "DragHelper");
-    qmlRegisterType<ProcessRunner>(uri, 0, 1, "ProcessRunner");
-    qmlRegisterType<RootModel>(uri, 0, 1, "RootModel");
-    qmlRegisterType<RunnerModel>(uri, 0, 1, "RunnerModel");
-    qmlRegisterType<SimpleMenuDialog>(uri, 0, 1, "SimpleMenuDialog");
-    qmlRegisterType<SystemSettings>(uri, 0, 1, "SystemSettings");
-    qmlRegisterType<WheelInterceptor>(uri, 0, 1, "WheelInterceptor");
-    qmlRegisterType<WindowSystem>(uri, 0, 1, "WindowSystem");
-}
+    public:
+        SimpleMenuDialog(QQuickItem *parent = 0);
+        ~SimpleMenuDialog();
+
+        QPoint popupPosition(QQuickItem *item, const QSize &size);
+
+        int offset() const;
+        void setOffset(int offset);
+
+        Plasma::Types::Location plasmoidLocation() const;
+        void setPlasmoidLocation(Plasma::Types::Location location);
+
+    Q_SIGNALS:
+        void offsetChanged() const;
+        void plasmoidLocationChanged() const;
+
+    private:
+        int m_offset;
+        Plasma::Types::Location m_plasmoidLocation;
+};
+
+#endif

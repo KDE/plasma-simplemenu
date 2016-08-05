@@ -25,10 +25,16 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import org.kde.plasma.private.simplemenu 0.1 as SimpleMenu
 
-FocusScope {
+SimpleMenu.SimpleMenuDialog {
     id: root
 
-    focus: true
+    objectName: "popupWindow"
+    flags: Qt.WindowStaysOnTopHint
+    location: PlasmaCore.Types.Floating
+    plasmoidLocation: plasmoid.location
+    hideOnWindowDeactivate: true
+
+    offset: units.gridUnit / 2
 
     property int iconSize: units.iconSizes.huge
     property int cellSize: iconSize + theme.mSize(theme.defaultFont).height
@@ -37,10 +43,11 @@ FocusScope {
                         highlightItemSvg.margins.left + highlightItemSvg.margins.right))
     property bool searching: (searchField.text != "")
 
-    Layout.minimumWidth: cellSize * 6
-    Layout.maximumWidth: cellSize * 6
-    Layout.minimumHeight: (cellSize * 4) + searchField.height + paginationBar.height + (2 * units.smallSpacing)
-    Layout.maximumHeight: (cellSize * 4) + searchField.height + paginationBar.height + (2 * units.smallSpacing)
+    onVisibleChanged: {
+        if (!visible) {
+            reset();
+        }
+    }
 
     onSearchingChanged: {
         if (searching) {
@@ -63,6 +70,14 @@ FocusScope {
         pageList.currentIndex = 0;
         pageList.currentItem.itemGrid.currentIndex = -1;
     }
+
+    mainItem: FocusScope {
+        Layout.minimumWidth: cellSize * 6
+        Layout.maximumWidth: cellSize * 6
+        Layout.minimumHeight: (cellSize * 4) + searchField.height + paginationBar.height + (2 * units.smallSpacing)
+        Layout.maximumHeight: (cellSize * 4) + searchField.height + paginationBar.height + (2 * units.smallSpacing)
+
+        focus: true
 
     Component {
         id: systemFavoritesGrid
@@ -441,9 +456,14 @@ FocusScope {
         }
     }
 
+        Keys.onEscapePressed: {
+            root.visible = false;
+        }
+
+    }
+
     Component.onCompleted: {
         kicker.reset.connect(reset);
-        windowSystem.hidden.connect(reset);
         dragHelper.dropped.connect(pageList.cycle);
     }
 }

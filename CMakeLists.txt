@@ -101,6 +101,7 @@ set(simplemenuplugin_SRCS
     plugin/rootmodel.cpp
     plugin/runnermodel.cpp
     plugin/runnermatchesmodel.cpp
+    plugin/simplemenudialog.cpp
     plugin/systementry.cpp
     plugin/systemmodel.cpp
     plugin/systemsettings.cpp
