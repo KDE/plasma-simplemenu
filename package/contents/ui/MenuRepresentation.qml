@@ -330,7 +330,7 @@ SimpleMenu.SimpleMenuDialog {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    width: (cellSize - (units.iconSizes.huge - units.iconSizes.medium)) * 6
+                    width: item ? (cellSize - (units.iconSizes.huge - units.iconSizes.medium)) * item.count : 0
                     height: cellSize
 
                     active: (index == 0 && !searching)
