@@ -26,7 +26,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     X11Extras
 )
 
-set(KF5_MIN_VERSION "5.12.0")
+set(KF5_MIN_VERSION "5.24.0")
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     Plasma
     PlasmaQuick
