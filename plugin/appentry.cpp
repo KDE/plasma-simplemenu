@@ -201,8 +201,7 @@ bool AppEntry::run(const QString& actionId, const QVariant &argument)
         }
 #endif
 
-        new KRun(QUrl::fromLocalFile(m_service->entryPath()), 0, true,
-            KStartupInfo::createNewStartupIdForTimestamp(timeStamp));
+        KRun::runService(*m_service, {}, nullptr, true, {}, KStartupInfo::createNewStartupIdForTimestamp(timeStamp));
 
         KActivities::ResourceInstance::notifyAccessed(QUrl("applications:" + m_service->storageId()),
             "org.kde.plasma.kicker");
