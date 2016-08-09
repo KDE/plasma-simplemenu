@@ -92,7 +92,7 @@ Item {
 
         Component.onCompleted: {
             favoritesModel.favorites = plasmoid.configuration.favoriteApps;
-            favoritesModel.maxFavorites = 18;
+            favoritesModel.maxFavorites = 24;
         }
     }
 

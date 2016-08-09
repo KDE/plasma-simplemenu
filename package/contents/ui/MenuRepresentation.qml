@@ -79,67 +79,13 @@ SimpleMenu.SimpleMenuDialog {
 
         focus: true
 
-    Component {
-        id: systemFavoritesGrid
-
-        ItemGridView {
-            id: gridView
-
-            anchors {
-                fill: parent
-                topMargin: (units.iconSizes.huge - units.iconSizes.medium) - (units.smallSpacing * 2)
-            }
-
-            cellWidth: cellSize - (units.iconSizes.huge - units.iconSizes.medium)
-            cellHeight: cellSize - (units.iconSizes.huge - units.iconSizes.medium)
-
-            iconSize: units.iconSizes.medium
-
-            horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-
-            dragEnabled: true
-
-            model: systemFavorites
-
-            onCurrentIndexChanged: {
-                if (currentIndex != -1) {
-                    pageListScrollArea.focus = true;
-                }
-            }
-
-            onKeyNavRight: {
-                var newIndex = pageList.currentIndex + 1;
-
-                if (newIndex == pageList.count) {
-                    newIndex = 0;
-                }
-
-                pageList.currentIndex = newIndex;
-
-                var currentGrid = pageList.currentItem.itemGrid;
-                currentGrid.tryActivate(3, 0);
-            }
-
-            onKeyNavLeft: {
-                var newIndex = pageList.currentIndex - 1;
-
-                if (newIndex < 0) {
-                    newIndex = (pageList.count - 1);
-                }
-
-                pageList.currentIndex = newIndex;
-
-                var currentGrid = pageList.currentItem.itemGrid;
-                currentGrid.tryActivate(3, 5);
-            }
-        }
-    }
-
     PlasmaComponents.TextField {
         id: searchField
 
         anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: systemFavoritesGrid.left
+        anchors.rightMargin: units.smallSpacing
 
         width: parent.width
 
@@ -154,6 +100,8 @@ SimpleMenu.SimpleMenuDialog {
             if (event.key == Qt.Key_Down) {
                 pageList.currentItem.itemGrid.focus = true;
                 pageList.currentItem.itemGrid.currentIndex = 0;
+            } else if (event.key == Qt.Key_Right) {
+                systemFavoritesGrid.tryActivate(0, 0);
             }
         }
 
@@ -165,6 +113,45 @@ SimpleMenu.SimpleMenuDialog {
         function appendText(newText) {
             focus = true;
             text = text + newText;
+        }
+    }
+
+    ItemGridView {
+        id: systemFavoritesGrid
+
+        anchors {
+            top: parent.top
+            right: parent.right
+        }
+
+        width: cellWidth * 4
+        height: searchField.height
+
+        cellWidth: height
+        cellHeight: height
+
+        iconSize: height - units.smallSpacing
+
+        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
+        dragEnabled: true
+        showLabels: false
+
+        model: systemFavorites
+
+        onCurrentIndexChanged: {
+            focus = true;
+        }
+
+        onKeyNavLeft: {
+            currentIndex = -1;
+            searchField.focus = true;
+        }
+
+        onKeyNavDown: {
+            pageList.currentItem.itemGrid.focus = true;
+            pageList.currentItem.itemGrid.currentIndex = 0;
         }
     }
 
@@ -204,11 +191,7 @@ SimpleMenu.SimpleMenuDialog {
                     return;
                 }
 
-                if (currentItem.loaderGrid && currentItem.loaderGrid.currentIndex != -1) {
-                    currentItem.loaderGrid.focus = true;
-                } else {
-                    currentItem.itemGrid.focus = true;
-                }
+                currentItem.itemGrid.focus = true;
             }
 
             onModelChanged: {
@@ -233,7 +216,6 @@ SimpleMenu.SimpleMenuDialog {
                 height: cellSize * 4
 
                 property Item itemGrid: gridView
-                property Item loaderGrid: systemFavoritesGridLoader.item
 
                 ItemGridView {
                     id: gridView
@@ -270,9 +252,7 @@ SimpleMenu.SimpleMenuDialog {
                         }
 
                         pageList.currentIndex = newIndex;
-
-                        var currentGrid = (newIndex == 0 && cRow == 3) ? pageList.currentItem.loaderGrid : pageList.currentItem.itemGrid;
-                        currentGrid.tryActivate((newIndex == 0) ? ((cRow == 3) ? 0 : cRow) : cRow, 0);
+                        pageList.currentItem.itemGrid.tryActivate(cRow, 0);
                     }
 
                     onKeyNavLeft: {
@@ -284,16 +264,7 @@ SimpleMenu.SimpleMenuDialog {
                         }
 
                         pageList.currentIndex = newIndex;
-
-                        var currentGrid = (newIndex == 0 && cRow == 3) ? pageList.currentItem.loaderGrid : pageList.currentItem.itemGrid;
-                        currentGrid.tryActivate((newIndex == 0) ? ((cRow == 3) ? 0 : cRow) : cRow, 5);
-                    }
-
-                    onKeyNavDown: {
-                        if (index == 0 && !searching) {
-                            systemFavoritesGridLoader.item.tryActivate(0, currentCol());
-                            systemFavoritesGridLoader.focus = true;
-                        }
+                        pageList.currentItem.itemGrid.tryActivate(cRow, 5);
                     }
                 }
 
@@ -318,42 +289,6 @@ SimpleMenu.SimpleMenuDialog {
                             }
 
                             pageList.currentIndex = newIndex;
-                        }
-                    }
-                }
-
-                Loader {
-                    id: systemFavoritesGridLoader
-
-                    anchors {
-                        bottom: parent.bottom
-                        horizontalCenter: parent.horizontalCenter
-                    }
-
-                    width: item ? (cellSize - (units.iconSizes.huge - units.iconSizes.medium)) * item.count : 0
-                    height: cellSize
-
-                    active: (index == 0 && !searching)
-                    sourceComponent: systemFavoritesGrid
-
-                    onFocusChanged: {
-                        if (!focus) {
-                            item.currentIndex = -1;
-                        }
-                    }
-
-                    Connections {
-                        target: systemFavoritesGridLoader.item
-
-                        onKeyNavUp: {
-                            pageList.currentItem.itemGrid.tryActivate(pageList.currentItem.itemGrid.lastRow(),
-                                systemFavoritesGridLoader.item.currentCol());
-                        }
-
-                        onCurrentIndexChanged: {
-                            if (systemFavoritesGridLoader.item.currentIndex != -1) {
-                                systemFavoritesGridLoader.focus = true;
-                            }
                         }
                     }
                 }
@@ -439,7 +374,7 @@ SimpleMenu.SimpleMenuDialog {
 
     Keys.onPressed: {
         if (event.key == Qt.Key_Escape) {
-            plasmoid.expanded = false;
+            root.visible = false;
             return;
         }
 
@@ -455,10 +390,6 @@ SimpleMenu.SimpleMenuDialog {
             searchField.appendText(event.text);
         }
     }
-
-        Keys.onEscapePressed: {
-            root.visible = false;
-        }
 
     }
 

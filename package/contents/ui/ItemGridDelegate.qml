@@ -65,7 +65,7 @@ MouseArea {
             if ("toggle" in root) {
                 root.toggle();
             } else {
-                plasmoid.expanded = false;
+                root.visible = false;
             }
         }
 
@@ -142,7 +142,7 @@ MouseArea {
             if ("toggle" in root) {
                 root.toggle();
             } else {
-                plasmoid.expanded = false;
+                root.visible = false;
             }
         }
     }
