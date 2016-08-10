@@ -30,7 +30,7 @@
 
 #include <KLocalizedString>
 
-GroupEntry::GroupEntry(RootModel *parentModel, const QString &name,
+GroupEntry::GroupEntry(AppsModel *parentModel, const QString &name,
     const QString &iconName, AbstractModel *childModel)
 : AbstractGroupEntry(parentModel)
 , m_name(name)
@@ -267,13 +267,18 @@ void RootModel::refresh()
             AbstractModel *model = groupEntry->childModel();
 
             for (int i = 0; i < model->count(); ++i) {
-                AppEntry *appEntry = static_cast<AppEntry*>(model->index(i, 0).internalPointer());
+                GroupEntry *subGroupEntry = static_cast<GroupEntry*>(model->index(i, 0).internalPointer());
+                AbstractModel *subModel = subGroupEntry->childModel();
 
-                if (appEntry->name().isEmpty()) {
-                    continue;
+                for (int i = 0; i < subModel->count(); ++i) {
+                    AppEntry *appEntry = static_cast<AppEntry*>(subModel->index(i, 0).internalPointer());
+
+                    if (appEntry->name().isEmpty()) {
+                        continue;
+                    }
+
+                    appsHash.insert(appEntry->service()->menuId(), appEntry);
                 }
-
-                appsHash.insert(appEntry->service()->menuId(), appEntry);
             }
         }
 
@@ -345,7 +350,6 @@ void RootModel::refresh()
 */
 
     m_systemModel = new SystemModel(this);
-    m_entryList << new GroupEntry(this, i18n("Power / Session"), QString(), m_systemModel);
 
     endResetModel();
 

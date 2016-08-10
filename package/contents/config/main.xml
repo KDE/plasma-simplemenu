@@ -16,6 +16,10 @@
       <default></default>
     </entry>
 
+    <entry name="showFilterList" type="Bool">
+      <default>true</default>
+    </entry>
+
     <entry name="appNameFormat" type="Int">
       <default>0</default>
     </entry>

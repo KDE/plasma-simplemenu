@@ -20,6 +20,7 @@
 
 #include "appsmodel.h"
 #include "actionlist.h"
+#include "rootmodel.h"
 
 #include <QCollator>
 #include <QQmlPropertyMap>
@@ -384,6 +385,32 @@ void AppsModel::refreshInternal()
         if (m_sortNeeded) {
             sortEntries();
         }
+
+        QList<AbstractEntry *> groups;
+
+        int at = 0;
+        QList<AbstractEntry *> page;
+
+        foreach(AbstractEntry *app, m_entryList) {
+            page.append(app);
+
+            if (at == 23) {
+                at = 0;
+                AppsModel *model = new AppsModel(page, false, this);
+                groups.append(new GroupEntry(this, QString(), QString(), model));
+                page.clear();
+            } else {
+                ++at;
+            }
+        }
+
+        if (page.count()) {
+            AppsModel *model = new AppsModel(page, true, this);
+            // FIXME: Use AppGroupEntry?
+            groups.append(new GroupEntry(this, QString(), QString(), model));
+        }
+
+        m_entryList = groups;
     }
 }
 

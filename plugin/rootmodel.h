@@ -33,7 +33,7 @@ class RootModel;
 class GroupEntry : public AbstractGroupEntry
 {
     public:
-        GroupEntry(RootModel *parentModel, const QString &name,
+        GroupEntry(AppsModel *parentModel, const QString &name,
             const QString &iconName, AbstractModel *childModel);
 
         QIcon icon() const;
