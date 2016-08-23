@@ -98,7 +98,7 @@ MouseArea {
     QIconItem {
         id: icon
 
-        y: showLabel ? (2 * highlightItemSvg.margins.top) : undefined
+        y: showLabel ? (2 * highlightItemSvg.margins.top) : 0
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: showLabel ? undefined : parent.verticalCenter
