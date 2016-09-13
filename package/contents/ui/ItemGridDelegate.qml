@@ -41,6 +41,7 @@ MouseArea {
     property bool pressed: false
     property bool hasActionList: ((model.favoriteId != null)
         || (("hasActionList" in model) && (model.hasActionList == true)))
+    property Item view: GridView.view
     property Item menu: actionMenu
 
     Accessible.role: Accessible.MenuItem
@@ -95,7 +96,7 @@ MouseArea {
         }
     }
 
-    QIconItem {
+    PlasmaCore.IconItem {
         id: icon
 
         y: showLabel ? (2 * highlightItemSvg.margins.top) : 0
@@ -106,7 +107,10 @@ MouseArea {
         width: iconSize
         height: width
 
-        icon: model.decoration
+        animated: false
+        usesPlasmaTheme: view.usesPlasmaTheme
+
+        source: model.decoration
     }
 
     PlasmaComponents.Label {

@@ -34,6 +34,7 @@ FocusScope {
 
     property bool dragEnabled: false
     property bool showLabels: true
+    property alias usesPlasmaTheme: gridView.usesPlasmaTheme
 
     property int iconSize: root.iconSize
 
@@ -207,6 +208,8 @@ FocusScope {
 
                 GridView {
                     id: gridView
+
+                    property bool usesPlasmaTheme: false
 
                     property bool animating: false
                     property int animationDuration: dragEnabled ? resetAnimationDurationTimer.interval : 0
