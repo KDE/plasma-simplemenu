@@ -23,7 +23,6 @@
 #include "processrunner.h"
 #include "rootmodel.h"
 #include "runnermodel.h"
-#include "simplemenudialog.h"
 #include "systemsettings.h"
 #include "wheelinterceptor.h"
 #include "windowsystem.h"
@@ -40,7 +39,6 @@ void SimpleMenuPlugin::registerTypes(const char *uri)
     qmlRegisterType<ProcessRunner>(uri, 0, 1, "ProcessRunner");
     qmlRegisterType<RootModel>(uri, 0, 1, "RootModel");
     qmlRegisterType<RunnerModel>(uri, 0, 1, "RunnerModel");
-    qmlRegisterType<SimpleMenuDialog>(uri, 0, 1, "SimpleMenuDialog");
     qmlRegisterType<SystemSettings>(uri, 0, 1, "SystemSettings");
     qmlRegisterType<WheelInterceptor>(uri, 0, 1, "WheelInterceptor");
     qmlRegisterType<WindowSystem>(uri, 0, 1, "WindowSystem");

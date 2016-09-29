@@ -150,6 +150,14 @@ Item {
         prefix: "hover"
     }
 
+    PlasmaCore.FrameSvgItem {
+        id : panelSvg
+
+        visible: false
+
+        imagePath: "widgets/panel-background"
+    }
+
     PlasmaComponents.Label {
         id: toolTipDelegate
 

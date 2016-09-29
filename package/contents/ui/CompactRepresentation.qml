@@ -26,6 +26,7 @@ Item {
     id: root
 
     property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
+    property var screenGeometry: plasmoid.screenGeometry
     property QtObject dashWindow: null
 
     PlasmaCore.IconItem {
@@ -118,7 +119,6 @@ Item {
 
     Component.onCompleted: {
         dashWindow = Qt.createQmlObject("MenuRepresentation {}", root);
-        dashWindow.visualParent = root;
         plasmoid.activated.connect(function() {
             dashWindow.visible = true;
         });

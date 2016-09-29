@@ -19,22 +19,20 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import org.kde.plasma.private.simplemenu 0.1 as SimpleMenu
 
-SimpleMenu.SimpleMenuDialog {
+PlasmaCore.Dialog {
     id: root
 
     objectName: "popupWindow"
     flags: Qt.WindowStaysOnTopHint
     location: PlasmaCore.Types.Floating
-    plasmoidLocation: plasmoid.location
     hideOnWindowDeactivate: true
-
-    offset: units.gridUnit / 2
 
     property int iconSize: units.iconSizes.huge
     property int cellSize: iconSize + theme.mSize(theme.defaultFont).height
@@ -46,7 +44,23 @@ SimpleMenu.SimpleMenuDialog {
     onVisibleChanged: {
         if (!visible) {
             reset();
+        } else {
+            var pos = popupPosition(width, height);
+            x = pos.x;
+            y = pos.y;
         }
+    }
+
+    onHeightChanged: {
+        var pos = popupPosition(width, height);
+        x = pos.x;
+        y = pos.y;
+    }
+
+    onWidthChanged: {
+        var pos = popupPosition(width, height);
+        x = pos.x;
+        y = pos.y;
     }
 
     onSearchingChanged: {
@@ -75,7 +89,42 @@ SimpleMenu.SimpleMenuDialog {
         pageList.currentItem.itemGrid.currentIndex = -1;
     }
 
-    mainItem: FocusScope {
+    function popupPosition(width, height) {
+        var screen = plasmoid.screenGeometry;
+        var offset = units.gridUnit;
+
+        // Fall back to bottom-left of screen area when the applet is on the desktop or floating.
+        var x = offset;
+        var y = screen.height - height - offset;
+
+        if (plasmoid.location == PlasmaCore.Types.BottomEdge) {
+            var horizMidPoint = screen.x + (screen.width / 2);
+            var appletTopLeft = parent.mapToGlobal(0, 0);
+            x = (appletTopLeft.x < horizMidPoint) ? screen.x + offset : (screen.x + screen.width) - width - offset;
+            y = (screen.height - parent.height) - height - offset - panelSvg.margins.top;
+        } else if (plasmoid.location == PlasmaCore.Types.TopEdge) {
+            var horizMidPoint = screen.x + (screen.width / 2);
+            var appletBottomLeft = parent.mapToGlobal(0, parent.height);
+            console.log(appletBottomLeft.y);
+            x = (appletBottomLeft.x < horizMidPoint) ? screen.x + offset : (screen.x + screen.width) - width - offset;
+            y = parent.height + panelSvg.margins.bottom + offset;
+        } else if (plasmoid.location == PlasmaCore.Types.LeftEdge) {
+            var vertMidPoint = screen.y + (screen.height / 2);
+            var appletTopLeft = parent.mapToGlobal(0, 0);
+            x = parent.width + panelSvg.margins.right + offset;
+            y = (appletTopLeft.y < vertMidPoint) ? screen.y + offset : (screen.y + screen.height) - height - offset;
+        } else if (plasmoid.location == PlasmaCore.Types.RightEdge) {
+            var vertMidPoint = screen.y + (screen.height / 2);
+            var appletTopLeft = parent.mapToGlobal(0, 0);
+            x = appletTopLeft.x - panelSvg.margins.left - offset - width;
+            y = (appletTopLeft.y < vertMidPoint) ? screen.y + offset : (screen.y + screen.height) - height - offset;
+        }
+
+        return Qt.point(x, y);
+    }
+
+
+    FocusScope {
         Layout.minimumWidth: (cellSize * 6) + Math.max(systemFavoritesGrid.width, filterListScrollArea.width) + units.smallSpacing
         Layout.maximumWidth: (cellSize * 6) + Math.max(systemFavoritesGrid.width, filterListScrollArea.width) + units.smallSpacing
         Layout.minimumHeight: (cellSize * 4) + searchField.height + paginationBar.height + (2 * units.smallSpacing)
