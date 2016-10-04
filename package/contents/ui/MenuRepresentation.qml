@@ -90,7 +90,9 @@ PlasmaCore.Dialog {
     }
 
     function popupPosition(width, height) {
-        var screen = plasmoid.screenGeometry;
+        var screen = plasmoid.availableScreenRect;
+        screen.x += plasmoid.screenGeometry.x;
+        screen.y += plasmoid.screenGeometry.y;
         var offset = units.gridUnit;
 
         // Fall back to bottom-left of screen area when the applet is on the desktop or floating.
@@ -101,7 +103,7 @@ PlasmaCore.Dialog {
             var horizMidPoint = screen.x + (screen.width / 2);
             var appletTopLeft = parent.mapToGlobal(0, 0);
             x = (appletTopLeft.x < horizMidPoint) ? screen.x + offset : (screen.x + screen.width) - width - offset;
-            y = (screen.height - parent.height) - height - offset - panelSvg.margins.top;
+            y = screen.height - height - offset - panelSvg.margins.top;
         } else if (plasmoid.location == PlasmaCore.Types.TopEdge) {
             var horizMidPoint = screen.x + (screen.width / 2);
             var appletBottomLeft = parent.mapToGlobal(0, parent.height);
