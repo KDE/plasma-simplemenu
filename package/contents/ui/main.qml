@@ -24,7 +24,7 @@ import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
-import org.kde.plasma.private.simplemenu 0.1 as SimpleMenu
+import org.kde.plasma.private.kicker 0.1 as Kicker
 
 Item {
     id: kicker
@@ -65,7 +65,7 @@ Item {
         MenuRepresentation {}
     }
 
-    SimpleMenu.RootModel {
+    Kicker.RootModel {
         id: rootModel
 
         appNameFormat: plasmoid.configuration.appNameFormat
@@ -73,26 +73,18 @@ Item {
         showSeparators: false
         appletInterface: plasmoid
 
-        showAllSubtree: true
-        showRecentApps: plasmoid.configuration.showRecentApps
-        showRecentDocs: plasmoid.configuration.showRecentDocs
-        showRecentContacts: plasmoid.configuration.showRecentContacts
+        paginate: true
+        pageSize: 24
 
-        onShowRecentAppsChanged: {
-            plasmoid.configuration.showRecentApps = showRecentApps;
-        }
-
-        onShowRecentDocsChanged: {
-            plasmoid.configuration.showRecentDocs = showRecentDocs;
-        }
-
-        onShowRecentContactsChanged: {
-            plasmoid.configuration.showRecentContacts = showRecentContacts;
-        }
+        showAllApps: true
+        showRecentApps: false
+        showRecentDocs: false
+        showRecentContacts: false
+        showPowerSession: false
 
         Component.onCompleted: {
             favoritesModel.favorites = plasmoid.configuration.favoriteApps;
-            favoritesModel.maxFavorites = 24;
+            favoritesModel.maxFavorites = rootModel.pageSize;
         }
     }
 
@@ -124,7 +116,7 @@ Item {
         }
     }
 
-    SimpleMenu.RunnerModel {
+    Kicker.RunnerModel {
         id: runnerModel
 
         favoritesModel: globalFavorites
@@ -133,11 +125,11 @@ Item {
         deleteWhenEmpty: false
     }
 
-    SimpleMenu.DragHelper {
+    Kicker.DragHelper {
         id: dragHelper
     }
 
-    SimpleMenu.ProcessRunner {
+    Kicker.ProcessRunner {
         id: processRunner;
     }
 

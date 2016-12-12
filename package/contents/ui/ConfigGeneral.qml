@@ -22,7 +22,7 @@ import QtQuick.Controls 1.0
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.0
 
-import org.kde.plasma.private.simplemenu 0.1 as SimpleMenu
+import org.kde.plasma.private.kicker 0.1 as Kicker
 
 Item {
     id: configGeneral
@@ -86,7 +86,7 @@ Item {
                     }
                 }
 
-                SimpleMenu.SystemSettings {
+                Kicker.SystemSettings {
                     id: systemSettings
                 }
             }
