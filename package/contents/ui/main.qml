@@ -68,6 +68,8 @@ Item {
     Kicker.RootModel {
         id: rootModel
 
+        autoPopulate: false
+
         appNameFormat: plasmoid.configuration.appNameFormat
         flat: true
         showSeparators: false
@@ -85,6 +87,7 @@ Item {
         Component.onCompleted: {
             favoritesModel.favorites = plasmoid.configuration.favoriteApps;
             favoritesModel.maxFavorites = rootModel.pageSize;
+            rootModel.refresh();
         }
     }
 
