@@ -85,6 +85,7 @@ Item {
         showPowerSession: false
 
         Component.onCompleted: {
+            globalFavorites.favorites = plasmoid.configuration.favoriteApps;
             favoritesModel.favorites = plasmoid.configuration.favoriteApps;
             favoritesModel.maxFavorites = rootModel.pageSize;
             rootModel.refresh();
