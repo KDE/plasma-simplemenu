@@ -179,7 +179,7 @@ FocusScope {
             }
 
             onContainsMouseChanged: {
-                if (!containsMouse) {
+                if (!containsMouse && (!currentItem || !currentItem.menu.opened)) {
                     gridView.currentIndex = -1;
                     pressX = -1;
                     pressY = -1;
@@ -264,6 +264,12 @@ FocusScope {
                     onCurrentIndexChanged: {
                         if (currentIndex != -1) {
                             focus = true;
+                        }
+                    }
+
+                    onCurrentItemChanged: {
+                        if (currentItem) {
+                            currentItem.menu.closed.connect(function() { gridView.currentIndex = -1; } );
                         }
                     }
 
