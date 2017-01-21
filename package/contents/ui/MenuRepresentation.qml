@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013-2015 by Eike Hein <hein@kde.org>                   *
+ *   Copyright (C) 2014 by Weng Xuetian <wengxt@gmail.com>
+ *   Copyright (C) 2013-2017 by Eike Hein <hein@kde.org>                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -289,6 +290,26 @@ PlasmaCore.Dialog {
                 enabled = true;
             }
 
+            function activateNextPrev(next) {
+                if (next) {
+                    var newIndex = pageList.currentIndex + 1;
+
+                    if (newIndex == pageList.count) {
+                        newIndex = 0;
+                    }
+
+                    pageList.currentIndex = newIndex;
+                } else {
+                    var newIndex = pageList.currentIndex - 1;
+
+                    if (newIndex < 0) {
+                        newIndex = (pageList.count - 1);
+                    }
+
+                    pageList.currentIndex = newIndex;
+                }
+            }
+
             delegate: Item {
                 width: cellSize * 6
                 height: cellSize * 4
@@ -350,24 +371,35 @@ PlasmaCore.Dialog {
                     anchors.fill: parent
                     z: 1
 
-                    onWheelMoved: {
-                        if (delta.x > 0 || delta.y > 0) {
-                            var newIndex = pageList.currentIndex - 1;
+                    property int wheelDelta: 0
 
-                            if (newIndex < 0) {
-                                newIndex = (pageList.count - 1);
-                            }
+                    function scrollByWheel(wheelDelta, eventDelta) {
+                        // magic number 120 for common "one click"
+                        // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
+                        wheelDelta += eventDelta;
 
-                            pageList.currentIndex = newIndex;
-                        } else {
-                            var newIndex = pageList.currentIndex + 1;
+                        var increment = 0;
 
-                            if (newIndex == pageList.count) {
-                                newIndex = 0;
-                            }
-
-                            pageList.currentIndex = newIndex;
+                        while (wheelDelta >= 120) {
+                            wheelDelta -= 120;
+                            increment++;
                         }
+
+                        while (wheelDelta <= -120) {
+                            wheelDelta += 120;
+                            increment--;
+                        }
+
+                        while (increment != 0) {
+                            pageList.activateNextPrev(increment < 0);
+                            increment += (increment < 0) ? 1 : -1;
+                        }
+
+                        return wheelDelta;
+                    }
+
+                    onWheelMoved: {
+                        wheelDelta = scrollByWheel(wheelDelta, delta.y);
                     }
                 }
             }
@@ -427,24 +459,35 @@ PlasmaCore.Dialog {
                 anchors.fill: parent
                 onClicked: pageList.currentIndex = index;
 
-                onWheel: {
-                    if (wheel.angleDelta.x > 0 || wheel.angleDelta.y > 0) {
-                        var newIndex = pageList.currentIndex - 1;
+                property int wheelDelta: 0
 
-                        if (newIndex < 0) {
-                            newIndex = (pageList.count - 1);
-                        }
+                function scrollByWheel(wheelDelta, eventDelta) {
+                    // magic number 120 for common "one click"
+                    // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
+                    wheelDelta += eventDelta;
 
-                        pageList.currentIndex = newIndex;
-                    } else {
-                        var newIndex = pageList.currentIndex + 1;
+                    var increment = 0;
 
-                        if (newIndex == pageList.count) {
-                            newIndex = 0;
-                        }
-
-                        pageList.currentIndex = newIndex;
+                    while (wheelDelta >= 120) {
+                        wheelDelta -= 120;
+                        increment++;
                     }
+
+                    while (wheelDelta <= -120) {
+                        wheelDelta += 120;
+                        increment--;
+                    }
+
+                    while (increment != 0) {
+                        pageList.activateNextPrev(increment < 0);
+                        increment += (increment < 0) ? 1 : -1;
+                    }
+
+                    return wheelDelta;
+                }
+
+                onWheel: {
+                    wheelDelta = scrollByWheel(wheelDelta, wheel.angleDelta.y);
                 }
             }
         }
