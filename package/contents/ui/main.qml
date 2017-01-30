@@ -45,12 +45,6 @@ Item {
     property QtObject globalFavorites: rootModel.favoritesModel
     property QtObject systemFavorites: rootModel.systemFavoritesModel
 
-    onSystemFavoritesChanged: {
-        systemFavorites.enabled = false;
-        systemFavorites.favorites = plasmoid.configuration.favoriteSystemActions;
-        systemFavorites.maxFavorites = 6;
-    }
-
     function action_menuedit() {
         processRunner.runMenuEditor();
     }
@@ -84,10 +78,20 @@ Item {
         showRecentContacts: false
         showPowerSession: false
 
-        Component.onCompleted: {
-            globalFavorites.favorites = plasmoid.configuration.favoriteApps;
+        onFavoritesModelChanged: {
             favoritesModel.favorites = plasmoid.configuration.favoriteApps;
-            favoritesModel.maxFavorites = rootModel.pageSize;
+            favoritesModel.maxFavorites = pageSize;
+        }
+
+        onSystemFavoritesModelChanged: {
+            systemFavoritesModel.enabled = false;
+            systemFavoritesModel.favorites = plasmoid.configuration.favoriteSystemActions;
+            systemFavoritesModel.maxFavorites = 6;
+        }
+
+        Component.onCompleted: {
+            favoritesModel.favorites = plasmoid.configuration.favoriteApps;
+            favoritesModel.maxFavorites = pageSize;
             rootModel.refresh();
         }
     }
