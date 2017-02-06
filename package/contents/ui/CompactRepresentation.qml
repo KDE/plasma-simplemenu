@@ -120,7 +120,7 @@ Item {
     Component.onCompleted: {
         dashWindow = Qt.createQmlObject("MenuRepresentation {}", root);
         plasmoid.activated.connect(function() {
-            dashWindow.visible = true;
+            dashWindow.visible = !dashWindow.visible;
         });
     }
 }
