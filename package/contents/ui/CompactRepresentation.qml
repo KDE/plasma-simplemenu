@@ -20,6 +20,7 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 
+import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
@@ -34,6 +35,8 @@ Item {
     readonly property bool useCustomButtonImage: (plasmoid.configuration.useCustomButtonImage
         && plasmoid.configuration.customButtonImage.length != 0)
     property QtObject dashWindow: null
+
+    Plasmoid.status: dashWindow.visible ? PlasmaCore.Types.RequiresAttentionStatus : PlasmaCore.Types.PassiveStatus
 
     onWidthChanged: updateSizeHints()
     onHeightChanged: updateSizeHints()
