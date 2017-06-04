@@ -277,6 +277,11 @@ FocusScope {
                     }
 
                     Keys.onLeftPressed: {
+                        if (currentIndex == -1) {
+                            currentIndex = 0;
+                            return;
+                        }
+
                         if (currentCol() != 0) {
                             event.accepted = true;
                             moveCurrentIndexLeft();
@@ -286,6 +291,11 @@ FocusScope {
                     }
 
                     Keys.onRightPressed: {
+                        if (currentIndex == -1) {
+                            currentIndex = 0;
+                            return;
+                        }
+
                         var columns = Math.floor(width / cellWidth);
 
                         if (currentCol() != columns - 1 && currentIndex != count - 1) {
@@ -297,6 +307,11 @@ FocusScope {
                     }
 
                     Keys.onUpPressed: {
+                        if (currentIndex == -1) {
+                            currentIndex = 0;
+                            return;
+                        }
+
                         if (currentRow() != 0) {
                             event.accepted = true;
                             moveCurrentIndexUp();
@@ -307,6 +322,11 @@ FocusScope {
                     }
 
                     Keys.onDownPressed: {
+                        if (currentIndex == -1) {
+                            currentIndex = 0;
+                            return;
+                        }
+
                         if (currentRow() < itemGrid.lastRow()) {
                             // Fix moveCurrentIndexDown()'s lack of proper spatial nav down
                             // into partial columns.
