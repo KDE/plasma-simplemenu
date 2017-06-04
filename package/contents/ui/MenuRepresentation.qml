@@ -109,7 +109,6 @@ PlasmaCore.Dialog {
         } else if (plasmoid.location == PlasmaCore.Types.TopEdge) {
             var horizMidPoint = screen.x + (screen.width / 2);
             var appletBottomLeft = parent.mapToGlobal(0, parent.height);
-            console.log(appletBottomLeft.y);
             x = (appletBottomLeft.x < horizMidPoint) ? screen.x + offset : (screen.x + screen.width) - width - offset;
             y = parent.height + panelSvg.margins.bottom + offset;
         } else if (plasmoid.location == PlasmaCore.Types.LeftEdge) {
@@ -175,15 +174,29 @@ PlasmaCore.Dialog {
                 pageList.currentItem.itemGrid.currentIndex = 0;
             } else if (event.key == Qt.Key_Right) {
                 systemFavoritesGrid.tryActivate(0, 0);
+            } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
+                if (text != "" && pageList.currentItem.itemGrid.count > 0) {
+                    pageList.currentItem.itemGrid.tryActivate(0, 0);
+                    pageList.currentItem.itemGrid.model.trigger(0, "", null);
+                    root.visible = false;
+                }
             }
         }
 
         function backspace() {
+            if (!root.visible) {
+                return;
+            }
+
             focus = true;
             text = text.slice(0, -1);
         }
 
         function appendText(newText) {
+            if (!root.visible) {
+                return;
+            }
+
             focus = true;
             text = text + newText;
         }
@@ -333,8 +346,15 @@ PlasmaCore.Dialog {
                     model: searching ? runnerModel.modelForRow(index) : rootModel.modelForRow(filterListScrollArea.visible ? filterList.currentIndex : 0).modelForRow(index)
 
                     onCurrentIndexChanged: {
-                        if (currentIndex != -1) {
+                        if (currentIndex != -1 && !searching) {
                             pageListScrollArea.focus = true;
+                            focus = true;
+                        }
+                    }
+
+                    onCountChanged: {
+                        if (searching && index == 0) {
+                            currentIndex = 0;
                         }
                     }
 
