@@ -36,7 +36,7 @@ Item {
         && plasmoid.configuration.customButtonImage.length != 0)
     property QtObject dashWindow: null
 
-    Plasmoid.status: dashWindow.visible ? PlasmaCore.Types.RequiresAttentionStatus : PlasmaCore.Types.PassiveStatus
+    Plasmoid.status: dashWindow && dashWindow.visible ? PlasmaCore.Types.RequiresAttentionStatus : PlasmaCore.Types.PassiveStatus
 
     onWidthChanged: updateSizeHints()
     onHeightChanged: updateSizeHints()
