@@ -1,0 +1,9 @@
+Changes in v1.0.2:
+* Made sure initial arrow key press always selects first item.
+* Polished search experience: First search result is selected while
+  searching, no longer requiring extra key presses to launch.
+* Fixed auto-hide panels not staying open while Simple Menu is open.
+* Support for the panel icon size hint in Frameworks 5, prevents panel
+  icon getting too large in wide panels.
+* Fixed panel icon missing mouseover highlight effect.
+* Now requiring KDE Frameworks v5.34.
