@@ -1,3 +1,7 @@
+Changes in v1.0.3:
+* Fix favorites on Plasma 5.11 and support the new globally shared
+  favorites and unique per-activity favorites.
+
 Changes in v1.0.2:
 * Made sure initial arrow key press always selects first item.
 * Polished search experience: First search result is selected while
