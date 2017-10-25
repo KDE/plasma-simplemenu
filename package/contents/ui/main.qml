@@ -149,6 +149,7 @@ Item {
 
         favoritesModel: globalFavorites
         runners: plasmoid.configuration.useExtraRunners ? new Array("services").concat(plasmoid.configuration.extraRunners) : "services"
+        appletInterface: plasmoid
 
         deleteWhenEmpty: false
     }
