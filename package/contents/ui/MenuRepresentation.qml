@@ -92,9 +92,14 @@ PlasmaCore.Dialog {
     }
 
     function popupPosition(width, height) {
-        var screen = plasmoid.availableScreenRect;
-        screen.x += plasmoid.screenGeometry.x;
-        screen.y += plasmoid.screenGeometry.y;
+        var screenAvail = plasmoid.availableScreenRect;
+        var screenGeom = plasmoid.screenGeometry;
+        //QtBug - QTBUG-64115
+        var screen = Qt.rect(screenAvail.x + screenGeom.x,
+                             screenAvail.y + screenGeom.y,
+                             screenAvail.width,
+                             screenAvail.height);
+
         var offset = units.gridUnit;
 
         // Fall back to bottom-left of screen area when the applet is on the desktop or floating.
