@@ -1,3 +1,7 @@
+Chances in v1.0.4:
+* Fixed menu appearing on the wrong monitor in multi-monitor setups.
+* Fixed crash when opening the context menu for search result items.
+
 Changes in v1.0.3:
 * Fix favorites on Plasma 5.11 and support the new globally shared
   favorites and unique per-activity favorites.
