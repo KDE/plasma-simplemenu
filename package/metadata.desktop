@@ -4,6 +4,7 @@ Name[ca]=Menú simple
 Name[nl]=Eenvoudig menu
 Name[pt]=Menu Simples
 Name[sk]=Jednoduchá ponuka
+Name[sv]=Enkel meny
 Name[uk]=Просте меню
 Name[x-test]=xxSimple Menuxx
 Comment=A simple launcher menu
@@ -11,6 +12,7 @@ Comment[ca]=Un llançador d'aplicacions simple
 Comment[nl]=Een programmastarter met eenvoudig menu
 Comment[pt]=Um menu de lançamento simples
 Comment[sk]=Jednnoduchá ponuka spúšťača
+Comment[sv]=En enkel startmeny
 Comment[uk]=Просте меню для запуску програм
 Comment[x-test]=xxA simple launcher menuxx
 
