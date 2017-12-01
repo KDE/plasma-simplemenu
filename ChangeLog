@@ -1,4 +1,8 @@
-Chances in v1.0.4:
+
+Changes in v1.0.5:
+* Speed optimizations to open the menu faster.
+
+Changes in v1.0.4:
 * Fixed menu appearing on the wrong monitor in multi-monitor setups.
 * Fixed crash when opening the context menu for search result items.
 
