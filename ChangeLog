@@ -1,3 +1,5 @@
+Changes in v1.0.6:
+* Fixed triggering context menu actions.
 
 Changes in v1.0.5:
 * Speed optimizations to open the menu faster.
