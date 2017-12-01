@@ -159,8 +159,12 @@ PlasmaCore.Dialog {
     ActionMenu {
         id: actionMenu
 
-        onActionClicked: {
-            actionTriggered(actionId, actionArgument);
+        onActionClicked: visualParent.actionTriggered(actionId, actionArgument)
+
+        onClosed: {
+            if (pageList.currentItem) {
+                pageList.currentItem.itemGrid.currentIndex = -1;
+            }
         }
     }
 

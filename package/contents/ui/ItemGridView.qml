@@ -261,12 +261,6 @@ FocusScope {
                     highlightFollowsCurrentItem: true
                     highlightMoveDuration: 0
 
-                    onCurrentItemChanged: {
-                        if (currentItem) {
-                            currentItem.menu.closed.connect(function() { gridView.currentIndex = -1; } );
-                        }
-                    }
-
                     onCountChanged: {
                         animationDuration = 0;
                         resetAnimationDurationTimer.start();
