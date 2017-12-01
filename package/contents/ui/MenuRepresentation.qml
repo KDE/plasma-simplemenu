@@ -156,6 +156,14 @@ PlasmaCore.Dialog {
         font: dummyHeading.font
     }
 
+    ActionMenu {
+        id: actionMenu
+
+        onActionClicked: {
+            actionTriggered(actionId, actionArgument);
+        }
+    }
+
     PlasmaComponents.TextField {
         id: searchField
 
@@ -274,7 +282,6 @@ PlasmaCore.Dialog {
 
             orientation: Qt.Horizontal
             snapMode: ListView.SnapOneItem
-            cacheBuffer: (cellSize * 6) * count
 
             currentIndex: 0
 

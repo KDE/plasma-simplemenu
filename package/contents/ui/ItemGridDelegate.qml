@@ -88,14 +88,6 @@ MouseArea {
         actionMenu.open(x, y);
     }
 
-    ActionMenu {
-        id: actionMenu
-
-        onActionClicked: {
-            actionTriggered(actionId, actionArgument);
-        }
-    }
-
     PlasmaCore.IconItem {
         id: icon
 
