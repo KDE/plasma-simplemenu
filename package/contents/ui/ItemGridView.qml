@@ -92,7 +92,7 @@ FocusScope {
                 : col,
                 count - 1);
 
-            focus = true;
+            gridView.forceActiveFocus();
         }
     }
 

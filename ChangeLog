@@ -1,3 +1,16 @@
+Changes in v1.0.7:
+* Fixed arrow navigation through the search results after entering
+  search terms not working.
+* Improved arrow navigation while searching: Previously, it was
+  necessary to arrow down into the results after entering search
+  terms before horizontal arrow navigation through the search
+  results would work. This was changed, so that e.g. arrow right
+  will now immediately move to the second search result, for a
+  more friction-free search and launch experience.
+* Tab and Shift+Tab can now be used to cycle through the search
+  field, the system favorites (Shutdown & co) and the category
+  list.
+
 Changes in v1.0.6:
 * Fixed triggering context menu actions.
 

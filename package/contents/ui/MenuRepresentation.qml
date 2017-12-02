@@ -187,15 +187,35 @@ PlasmaCore.Dialog {
 
         Keys.onPressed: {
             if (event.key == Qt.Key_Down) {
-                pageList.currentItem.itemGrid.focus = true;
-                pageList.currentItem.itemGrid.currentIndex = 0;
+                event.accepted = true;
+                pageList.currentItem.itemGrid.tryActivate(0, 0);
             } else if (event.key == Qt.Key_Right) {
-                systemFavoritesGrid.tryActivate(0, 0);
+                if (cursorPosition == length) {
+                    event.accepted = true;
+
+                    if (pageList.currentItem.itemGrid.currentIndex == -1) {
+                        pageList.currentItem.itemGrid.tryActivate(0, 0);
+                    } else {
+                        pageList.currentItem.itemGrid.tryActivate(0, 1);
+                    }
+                }
             } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
                 if (text != "" && pageList.currentItem.itemGrid.count > 0) {
+                    event.accepted = true;
                     pageList.currentItem.itemGrid.tryActivate(0, 0);
                     pageList.currentItem.itemGrid.model.trigger(0, "", null);
                     root.visible = false;
+                }
+            } else if (event.key == Qt.Key_Tab) {
+                event.accepted = true;
+                systemFavoritesGrid.tryActivate(0, 0);
+            } else if (event.key == Qt.Key_Backtab) {
+                event.accepted = true;
+
+                if (!searching) {
+                    filterList.forceActiveFocus();
+                } else {
+                    systemFavoritesGrid.tryActivate(0, 0);
                 }
             }
         }
@@ -257,6 +277,24 @@ PlasmaCore.Dialog {
 
             if (pageList.currentItem) {
                 pageList.currentItem.itemGrid.tryActivate(0, 0);
+            }
+        }
+
+        Keys.onPressed: {
+            if (event.key == Qt.Key_Tab) {
+                event.accepted = true;
+
+                currentIndex = -1;
+
+                if (!searching) {
+                    filterList.forceActiveFocus();
+                } else {
+                    searchField.focus = true;
+                }
+            } else if (event.key == Qt.Key_Backtab) {
+                event.accepted = true;
+                currentIndex = -1;
+                searchField.focus = true;
             }
         }
     }
@@ -704,6 +742,12 @@ PlasmaCore.Dialog {
                     if (pageList.currentItem) {
                         pageList.currentItem.itemGrid.tryActivate(currentRow, 5);
                     }
+                } else if (event.key == Qt.Key_Tab) {
+                    event.accepted = true;
+                    searchField.focus = true;
+                } else if (event.key == Qt.Key_Backtab) {
+                    event.accepted = true;
+                    systemFavoritesGrid.tryActivate(0, 0);
                 }
             }
         }
@@ -729,6 +773,11 @@ PlasmaCore.Dialog {
         if (event.key == Qt.Key_Backspace) {
             event.accepted = true;
             searchField.backspace();
+        } else if (event.key == Qt.Key_Tab || event.key == Qt.Key_Backtab) {
+            if (pageListScrollArea.focus == true && pageList.currentItem.itemGrid.currentIndex == -1) {
+                event.accepted = true;
+                pageList.currentItem.itemGrid.tryActivate(0, 0);
+            }
         } else if (event.text != "") {
             event.accepted = true;
             searchField.appendText(event.text);
