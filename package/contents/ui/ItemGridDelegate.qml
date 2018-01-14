@@ -25,14 +25,11 @@ import org.kde.kquickcontrolsaddons 2.0
 
 import "../code/tools.js" as Tools
 
-MouseArea {
+Item {
     id: item
 
     width: GridView.view.cellWidth
     height: width
-
-    signal actionTriggered(string actionId, variant actionArgument)
-    signal aboutToShowActionMenu(variant actionMenu)
 
     property bool showLabel: true
 
@@ -42,50 +39,23 @@ MouseArea {
     property bool hasActionList: ((model.favoriteId != null)
         || (("hasActionList" in model) && (model.hasActionList == true)))
     property Item view: GridView.view
-    property Item menu: actionMenu
 
     Accessible.role: Accessible.MenuItem
     Accessible.name: model.display
 
-    acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-    onPressed: {
-        if (mouse.buttons & Qt.RightButton) {
-            if (hasActionList) {
-                openActionMenu(item, mouse.x, mouse.y);
-            }
-        } else {
-            pressed = true;
-        }
-    }
-
-    onReleased: {
-        if (pressed && GridView.view.currentItem == item) {
-            GridView.view.model.trigger(index, "", null);
-
-            if ("toggle" in root) {
-                root.toggle();
-            } else {
-                root.visible = false;
-            }
-        }
-
-        pressed = false;
-    }
-
-    onAboutToShowActionMenu: {
+    function openActionMenu(x, y) {
         var actionList = hasActionList ? model.actionList : [];
         Tools.fillActionMenu(actionMenu, actionList, GridView.view.model.favoritesModel, model.favoriteId);
-    }
-
-    onActionTriggered: {
-        Tools.triggerAction(GridView.view.model, model.index, actionId, actionArgument);
-    }
-
-    function openActionMenu(visualParent, x, y) {
-        aboutToShowActionMenu(actionMenu);
-        actionMenu.visualParent = visualParent;
+        actionMenu.visualParent = item;
         actionMenu.open(x, y);
+    }
+
+    function actionTriggered() {
+        var close = Tools.triggerAction(GridView.view.model, model.index, actionId, actionArgument);
+
+        if (close) {
+            root.toggle();
+        }
     }
 
     PlasmaCore.IconItem {
