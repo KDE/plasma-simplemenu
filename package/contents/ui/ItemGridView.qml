@@ -383,7 +383,7 @@ FocusScope {
             }
 
             onContainsMouseChanged: {
-                if (!containsMouse && (!currentItem || !currentItem.menu.opened)) {
+                if (!containsMouse) {
                     gridView.currentIndex = -1;
                     pressX = -1;
                     pressY = -1;
