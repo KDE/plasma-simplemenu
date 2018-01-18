@@ -1,3 +1,6 @@
+Changes in v1.0.9:
+* Fixed a bug causing system action buttons to stay highlighted
+  when the mouse pointer leaves the area.
 
 Changes in v1.0.8:
 * Made switching categories by hovering them optional. You can now
