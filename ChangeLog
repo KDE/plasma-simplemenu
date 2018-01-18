@@ -1,3 +1,19 @@
+
+Changes in v1.0.8:
+* Made switching categories by hovering them optional. You can now
+  turn it off in the settings.
+* Custom panel button images now work better. They're smoothly
+  scaled, and square images are automatically rounded to crisp sizes
+  just like normal icons are.
+* The UI for setting custom button images now uses the regular icon
+  picker dialog (it supports custom images in recent releases of the
+  KDE Frameworks libraries) and you can also set a custom button
+  image by just dropping it on the config area.
+* Speed optimizations to make the menu open faster and speed up
+  switching of categories.
+* Fixed hovering a menu item interfering with arrow keyboard navi-
+  gation on newer versions of Qt.
+
 Changes in v1.0.7:
 * Fixed arrow navigation through the search results after entering
   search terms not working.

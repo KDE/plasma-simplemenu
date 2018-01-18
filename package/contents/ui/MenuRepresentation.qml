@@ -638,7 +638,17 @@ PlasmaCore.Dialog {
                     }
                 }
 
+                onPressed: {
+                    if (!plasmoid.configuration.switchCategoriesOnHover) {
+                        ListView.view.currentIndex = index;
+                    }
+                }
+
                 onPositionChanged: { // Lazy menu implementation.
+                    if (!plasmoid.configuration.switchCategoriesOnHover) {
+                        return;
+                    }
+
                     mouseCol = mouse.x;
 
                     if (index == ListView.view.currentIndex) {

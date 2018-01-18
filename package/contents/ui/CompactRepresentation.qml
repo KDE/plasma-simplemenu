@@ -82,7 +82,11 @@ Item {
 
         active: mouseArea.containsMouse
 
-        roundToIconSize: !useCustomButtonImage
+        smooth: true
+
+        // A custom icon could also be rectangular. However, if a square, custom, icon is given, assume it
+        // to be an icon and round it to the nearest icon size again to avoid scaling artefacts.
+        roundToIconSize: !useCustomButtonImage || aspectRatio === 1
 
         onSourceChanged: updateSizeHints()
     }
