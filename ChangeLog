@@ -1,3 +1,6 @@
+Changes in v1.0.10:
+* Fixed "Add to Favorites" not working as of v1.0.8.
+
 Changes in v1.0.9:
 * Fixed a bug causing system action buttons to stay highlighted
   when the mouse pointer leaves the area.
