@@ -287,11 +287,38 @@ FocusScope {
 
             hoverEnabled: true
 
+            function updatePositionProperties(x, y) {
+                // Prevent hover event synthesis in QQuickWindow interfering
+                // with keyboard navigation by ignoring repeated events with
+                // identical coordinates. As the work done here would be re-
+                // dundant in any case, these are safe to ignore.
+                if (lastX == x && lastY == y) {
+                    return;
+                }
+
+                lastX = x;
+                lastY = y;
+
+                var cPos = mapToItem(gridView.contentItem, x, y);
+                var item = gridView.itemAt(cPos.x, cPos.y);
+
+                if (!item) {
+                    gridView.currentIndex = -1;
+                    pressedItem = null;
+                } else {
+                    gridView.currentIndex = item.itemIndex;
+                    itemGrid.focus = (currentIndex != -1)
+                }
+
+                return item;
+            }
+
             onPressed: {
+                mouse.accepted = true;
+
+                updatePositionProperties(mouse.x, mouse.y);
                 pressX = mouse.x;
                 pressY = mouse.y;
-
-                mouse.accepted = true;
 
                 if (mouse.button == Qt.RightButton) {
                     if (gridView.currentItem) {
@@ -359,26 +386,22 @@ FocusScope {
             }
 
             onPositionChanged: {
-                // Prevent hover event synthesis in QQuickWindow interfering
-                // with keyboard navigation by ignoring repeated events with
-                // identical coordinates. As the work done here would be re-
-                // dundant in any case, these are safe to ignore.
-                if (mouse.x == lastX && mouse.y == lastY) {
-                    return;
-                }
+                var item = updatePositionProperties(mouse.x, mouse.y);
 
-                lastX = mouse.x;
-                lastY = mouse.y;
+                if (gridView.currentIndex != -1) {
+                    if (dragEnabled && pressX != -1 && dragHelper.isDrag(pressX, pressY, mouse.x, mouse.y)) {
+                        if ("pluginName" in item.m) {
+                            dragHelper.startDrag(kicker, item.url, item.icon,
+                            "text/x-plasmoidservicename", item.m.pluginName);
+                        } else {
+                            dragHelper.startDrag(kicker, item.url, item.icon);
+                        }
 
-                var cPos = mapToItem(gridView.contentItem, mouse.x, mouse.y);
-                var item = gridView.itemAt(cPos.x, cPos.y);
+                        kicker.dragSource = item;
 
-                if (!item) {
-                    gridView.currentIndex = -1;
-                    pressedItem = null;
-                } else {
-                    gridView.currentIndex = item.itemIndex;
-                    itemGrid.focus = (currentIndex != -1)
+                        pressX = -1;
+                        pressY = -1;
+                    }
                 }
             }
 
