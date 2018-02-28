@@ -23,6 +23,7 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import org.kde.plasma.private.kicker 0.1 as Kicker
@@ -168,7 +169,7 @@ PlasmaCore.Dialog {
         }
     }
 
-    PlasmaComponents.TextField {
+    PlasmaComponents3.TextField {
         id: searchField
 
         anchors.top: parent.top
@@ -179,7 +180,6 @@ PlasmaCore.Dialog {
         width: parent.width
 
         placeholderText: i18n("Search...")
-        clearButtonShown: true
 
         onTextChanged: {
             runnerModel.query = text;
