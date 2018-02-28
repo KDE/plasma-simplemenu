@@ -19,6 +19,7 @@
 
 import QtQuick 2.0
 
+import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.kquickcontrolsaddons 2.0
@@ -33,29 +34,24 @@ Item {
 
     property bool showLabel: true
 
-    property int itemIndex: model.index
-    property url url: model.url != undefined ? model.url : ""
+    readonly property int itemIndex: model.index
+    readonly property url url: model.url != undefined ? model.url : ""
     property bool pressed: false
-    property bool hasActionList: ((model.favoriteId != null)
+    readonly property bool hasActionList: ((model.favoriteId != null)
         || (("hasActionList" in model) && (model.hasActionList == true)))
-    property Item view: GridView.view
 
     Accessible.role: Accessible.MenuItem
     Accessible.name: model.display
 
     function openActionMenu(x, y) {
         var actionList = hasActionList ? model.actionList : [];
-        Tools.fillActionMenu(actionMenu, actionList, GridView.view.model.favoritesModel, model.favoriteId);
+        Tools.fillActionMenu(i18n, actionMenu, actionList, GridView.view.model.favoritesModel, model.favoriteId);
         actionMenu.visualParent = item;
         actionMenu.open(x, y);
     }
 
     function actionTriggered(actionId, actionArgument) {
-        var close = Tools.triggerAction(GridView.view.model, model.index, actionId, actionArgument);
-
-        if (close) {
-            root.toggle();
-        }
+        Tools.triggerAction(plasmoid, GridView.view.model, model.index, actionId, actionArgument);
     }
 
     PlasmaCore.IconItem {
@@ -70,7 +66,7 @@ Item {
         height: width
 
         animated: false
-        usesPlasmaTheme: view.usesPlasmaTheme
+        usesPlasmaTheme: item.GridView.view.usesPlasmaTheme
 
         source: model.decoration
     }
