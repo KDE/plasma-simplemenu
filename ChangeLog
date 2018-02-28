@@ -1,3 +1,10 @@
+Changes in v1.0.11:
+* Launching apps by touchscreen tap now works.
+* An item's highlight decoration now stays in place when opening
+  its context menu.
+* Resource usage optimizations for an even faster and lighter menu.
+* Minor bugfixes.
+
 Changes in v1.0.10:
 * Fixed "Add to Favorites" not working as of v1.0.8.
 
