@@ -1,3 +1,9 @@
+Changes in v1.0.12:
+* Menu entries are now always sorted alphabetically. On future
+  Plasma releases this will include the category list on the right
+  of Simple Menu.
+* The search field now has a placeholder text.
+
 Changes in v1.0.11:
 * Launching apps by touchscreen tap now works.
 * An item's highlight decoration now stays in place when opening
