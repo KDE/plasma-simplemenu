@@ -1,4 +1,58 @@
-Chances in v1.0.4:
+Changes in v1.0.12:
+* Menu entries are now always sorted alphabetically. On future
+  Plasma releases this will include the category list on the right
+  of Simple Menu.
+* The search field now has a placeholder text.
+
+Changes in v1.0.11:
+* Launching apps by touchscreen tap now works.
+* An item's highlight decoration now stays in place when opening
+  its context menu.
+* Resource usage optimizations for an even faster and lighter menu.
+* Minor bugfixes.
+
+Changes in v1.0.10:
+* Fixed "Add to Favorites" not working as of v1.0.8.
+
+Changes in v1.0.9:
+* Fixed a bug causing system action buttons to stay highlighted
+  when the mouse pointer leaves the area.
+
+Changes in v1.0.8:
+* Made switching categories by hovering them optional. You can now
+  turn it off in the settings.
+* Custom panel button images now work better. They're smoothly
+  scaled, and square images are automatically rounded to crisp sizes
+  just like normal icons are.
+* The UI for setting custom button images now uses the regular icon
+  picker dialog (it supports custom images in recent releases of the
+  KDE Frameworks libraries) and you can also set a custom button
+  image by just dropping it on the config area.
+* Speed optimizations to make the menu open faster and speed up
+  switching of categories.
+* Fixed hovering a menu item interfering with arrow keyboard navi-
+  gation on newer versions of Qt.
+
+Changes in v1.0.7:
+* Fixed arrow navigation through the search results after entering
+  search terms not working.
+* Improved arrow navigation while searching: Previously, it was
+  necessary to arrow down into the results after entering search
+  terms before horizontal arrow navigation through the search
+  results would work. This was changed, so that e.g. arrow right
+  will now immediately move to the second search result, for a
+  more friction-free search and launch experience.
+* Tab and Shift+Tab can now be used to cycle through the search
+  field, the system favorites (Shutdown & co) and the category
+  list.
+
+Changes in v1.0.6:
+* Fixed triggering context menu actions.
+
+Changes in v1.0.5:
+* Speed optimizations to open the menu faster.
+
+Changes in v1.0.4:
 * Fixed menu appearing on the wrong monitor in multi-monitor setups.
 * Fixed crash when opening the context menu for search result items.
 

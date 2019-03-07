@@ -66,6 +66,7 @@ Item {
 
         appNameFormat: plasmoid.configuration.appNameFormat
         flat: true
+        sorted: true
         showSeparators: false
         appletInterface: plasmoid
 

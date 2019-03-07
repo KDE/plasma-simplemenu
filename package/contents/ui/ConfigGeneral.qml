@@ -22,6 +22,12 @@ import QtQuick.Controls 1.0
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.0
 
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
+
+import org.kde.kquickcontrolsaddons 2.0 as KQuickAddons
+import org.kde.draganddrop 2.0 as DragDrop
+
 import org.kde.plasma.private.kicker 0.1 as Kicker
 
 Item {
@@ -30,64 +36,119 @@ Item {
     width: childrenRect.width
     height: childrenRect.height
 
-    property alias cfg_useCustomButtonImage: useCustomButtonImage.checked
-    property alias cfg_customButtonImage: customButtonImage.text
+    property string cfg_icon: plasmoid.configuration.icon
+    property bool cfg_useCustomButtonImage: plasmoid.configuration.useCustomButtonImage
+    property string cfg_customButtonImage: plasmoid.configuration.customButtonImage
 
     property alias cfg_appNameFormat: appNameFormat.currentIndex
+    property alias cfg_switchCategoriesOnHover: switchCategoriesOnHover.checked
 
     property alias cfg_useExtraRunners: useExtraRunners.checked
 
     ColumnLayout {
-        GroupBox {
-            Layout.fillWidth: true
+        anchors.left: parent.left
 
-            title: i18n("Icon")
+        RowLayout {
+            spacing: units.smallSpacing
 
-            flat: true
+            Label {
+                text: i18n("Icon:")
+            }
 
-            RowLayout {
-                CheckBox {
-                    id: useCustomButtonImage
+            Button {
+                id: iconButton
+                Layout.minimumWidth: previewFrame.width + units.smallSpacing * 2
+                Layout.maximumWidth: Layout.minimumWidth
+                Layout.minimumHeight: previewFrame.height + units.smallSpacing * 2
+                Layout.maximumHeight: Layout.minimumWidth
 
-                    text: i18n("Use custom image:")
+                DragDrop.DropArea {
+                    id: dropArea
+
+                    property bool containsAcceptableDrag: false
+
+                    anchors.fill: parent
+
+                    onDragEnter: {
+                        // Cannot use string operations (e.g. indexOf()) on "url" basic type.
+                        var urlString = event.mimeData.url.toString();
+
+                        // This list is also hardcoded in KIconDialog.
+                        var extensions = [".png", ".xpm", ".svg", ".svgz"];
+                        containsAcceptableDrag = urlString.indexOf("file:///") === 0 && extensions.some(function (extension) {
+                            return urlString.indexOf(extension) === urlString.length - extension.length; // "endsWith"
+                        });
+
+                        if (!containsAcceptableDrag) {
+                            event.ignore();
+                        }
+                    }
+                    onDragLeave: containsAcceptableDrag = false
+
+                    onDrop: {
+                        if (containsAcceptableDrag) {
+                            // Strip file:// prefix, we already verified in onDragEnter that we have only local URLs.
+                            iconDialog.setCustomButtonImage(event.mimeData.url.toString().substr("file://".length));
+                        }
+                        containsAcceptableDrag = false;
+                    }
                 }
 
-                TextField {
-                    id: customButtonImage
+                KQuickAddons.IconDialog {
+                    id: iconDialog
 
-                    enabled: useCustomButtonImage.checked
+                    function setCustomButtonImage(image) {
+                        cfg_customButtonImage = image || cfg_icon || "start-here-kde"
+                        cfg_useCustomButtonImage = true;
+                    }
 
-                    Layout.fillWidth: true
+                    onIconNameChanged: setCustomButtonImage(iconName);
                 }
 
-                Button {
-                    iconName: "document-open"
+                // just to provide some visual feedback, cannot have checked without checkable enabled
+                checkable: true
+                checked: dropArea.containsAcceptableDrag
+                onClicked: {
+                    checked = Qt.binding(function() { // never actually allow it being checked
+                        return iconMenu.status === PlasmaComponents.DialogStatus.Open || dropArea.containsAcceptableDrag;
+                    })
 
-                    enabled: useCustomButtonImage.checked
+                    iconMenu.open(0, height)
+                }
 
+                PlasmaCore.FrameSvgItem {
+                    id: previewFrame
+                    anchors.centerIn: parent
+                    imagePath: plasmoid.location === PlasmaCore.Types.Vertical || plasmoid.location === PlasmaCore.Types.Horizontal
+                            ? "widgets/panel-background" : "widgets/background"
+                    width: units.iconSizes.large + fixedMargins.left + fixedMargins.right
+                    height: units.iconSizes.large + fixedMargins.top + fixedMargins.bottom
+
+                    PlasmaCore.IconItem {
+                        anchors.centerIn: parent
+                        width: units.iconSizes.large
+                        height: width
+                        source: cfg_useCustomButtonImage ? cfg_customButtonImage : cfg_icon
+                    }
+                }
+            }
+
+            // QQC Menu can only be opened at cursor position, not a random one
+            PlasmaComponents.ContextMenu {
+                id: iconMenu
+                visualParent: iconButton
+
+                PlasmaComponents.MenuItem {
+                    text: i18nc("@item:inmenu Open icon chooser dialog", "Choose...")
+                    icon: "document-open-folder"
+                    onClicked: iconDialog.open()
+                }
+                PlasmaComponents.MenuItem {
+                    text: i18nc("@item:inmenu Reset icon to default", "Clear Icon")
+                    icon: "edit-clear"
                     onClicked: {
-                        imagePicker.folder = systemSettings.picturesLocation();
-                        imagePicker.open();
+                        cfg_useCustomButtonImage = false;
                     }
-                }
-
-                FileDialog {
-                    id: imagePicker
-
-                    title: i18n("Choose an image")
-
-                    selectFolder: false
-                    selectMultiple: false
-
-                    nameFilters: [ i18n("Image Files (*.png *.jpg *.jpeg *.bmp *.svg *.svgz)") ]
-
-                    onFileUrlChanged: {
-                        customButtonImage.text = fileUrl;
-                    }
-                }
-
-                Kicker.SystemSettings {
-                    id: systemSettings
                 }
             }
         }
@@ -112,6 +173,12 @@ Item {
 
                         model: [i18n("Name only"), i18n("Description only"), i18n("Name (Description)"), i18n("Description (Name)")]
                     }
+                }
+
+                CheckBox {
+                    id: switchCategoriesOnHover
+
+                    text: i18n("Switch categories on hover")
                 }
             }
         }

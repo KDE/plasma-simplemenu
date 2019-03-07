@@ -19,81 +19,39 @@
 
 import QtQuick 2.0
 
+import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.kquickcontrolsaddons 2.0
 
 import "../code/tools.js" as Tools
 
-MouseArea {
+Item {
     id: item
 
     width: GridView.view.cellWidth
     height: width
 
-    signal actionTriggered(string actionId, variant actionArgument)
-    signal aboutToShowActionMenu(variant actionMenu)
-
     property bool showLabel: true
 
-    property int itemIndex: model.index
-    property url url: model.url != undefined ? model.url : ""
+    readonly property int itemIndex: model.index
+    readonly property url url: model.url != undefined ? model.url : ""
     property bool pressed: false
-    property bool hasActionList: ((model.favoriteId != null)
+    readonly property bool hasActionList: ((model.favoriteId != null)
         || (("hasActionList" in model) && (model.hasActionList == true)))
-    property Item view: GridView.view
-    property Item menu: actionMenu
 
     Accessible.role: Accessible.MenuItem
     Accessible.name: model.display
 
-    acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-    onPressed: {
-        if (mouse.buttons & Qt.RightButton) {
-            if (hasActionList) {
-                openActionMenu(item, mouse.x, mouse.y);
-            }
-        } else {
-            pressed = true;
-        }
-    }
-
-    onReleased: {
-        if (pressed && GridView.view.currentItem == item) {
-            GridView.view.model.trigger(index, "", null);
-
-            if ("toggle" in root) {
-                root.toggle();
-            } else {
-                root.visible = false;
-            }
-        }
-
-        pressed = false;
-    }
-
-    onAboutToShowActionMenu: {
+    function openActionMenu(x, y) {
         var actionList = hasActionList ? model.actionList : [];
-        Tools.fillActionMenu(actionMenu, actionList, GridView.view.model.favoritesModel, model.favoriteId);
-    }
-
-    onActionTriggered: {
-        Tools.triggerAction(GridView.view.model, model.index, actionId, actionArgument);
-    }
-
-    function openActionMenu(visualParent, x, y) {
-        aboutToShowActionMenu(actionMenu);
-        actionMenu.visualParent = visualParent;
+        Tools.fillActionMenu(i18n, actionMenu, actionList, GridView.view.model.favoritesModel, model.favoriteId);
+        actionMenu.visualParent = item;
         actionMenu.open(x, y);
     }
 
-    ActionMenu {
-        id: actionMenu
-
-        onActionClicked: {
-            actionTriggered(actionId, actionArgument);
-        }
+    function actionTriggered(actionId, actionArgument) {
+        Tools.triggerAction(plasmoid, GridView.view.model, model.index, actionId, actionArgument);
     }
 
     PlasmaCore.IconItem {
@@ -108,7 +66,7 @@ MouseArea {
         height: width
 
         animated: false
-        usesPlasmaTheme: view.usesPlasmaTheme
+        usesPlasmaTheme: item.GridView.view.usesPlasmaTheme
 
         source: model.decoration
     }

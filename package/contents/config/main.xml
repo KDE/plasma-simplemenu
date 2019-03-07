@@ -46,6 +46,10 @@
     <entry name="alignResultsToBottom" type="Bool">
       <default>true</default>
     </entry>
+    <entry name="switchCategoriesOnHover" type="Bool">
+      <label>Whether to switch between menu categories by hovering them.</label>
+      <default>true</default>
+    </entry>
 
     <entry name="removeApplicationCommand" type="String">
       <default>muon-discover --application</default>
