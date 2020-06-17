@@ -27,7 +27,6 @@ Name[sk]=Jednoduchá ponuka
 Name[sl]=Simple Menu
 Name[sv]=Enkel meny
 Name[uk]=Просте меню
-Name[x-test]=xxSimple Menuxx
 Name[zh_TW]=簡易選單
 Comment=A simple launcher menu
 Comment[ca]=Un llançador d'aplicacions simple
@@ -57,7 +56,6 @@ Comment[sk]=Jednnoduchá ponuka spúšťača
 Comment[sl]=Preprosti zagonski meni
 Comment[sv]=En enkel startmeny
 Comment[uk]=Просте меню для запуску програм
-Comment[x-test]=xxA simple launcher menuxx
 Comment[zh_TW]=簡易的啟動器選單
 
 Type=Service
