@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Simple Menu
+Name[az]=Sadə menyu
 Name[ca]=Menú simple
 Name[ca@valencia]=Menú simple
 Name[cs]=Jednoduchá nabídka
@@ -30,6 +31,7 @@ Name[uk]=Просте меню
 Name[x-test]=xxSimple Menuxx
 Name[zh_TW]=簡易選單
 Comment=A simple launcher menu
+Comment[az]=Sadə tətbiq başlatma menyusu
 Comment[ca]=Un llançador d'aplicacions simple
 Comment[ca@valencia]=Un llançador d'aplicacions simple
 Comment[cs]=Jednoduchá nabídka spouštěče
