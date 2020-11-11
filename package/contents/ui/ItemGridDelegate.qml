@@ -29,8 +29,8 @@ import "../code/tools.js" as Tools
 Item {
     id: item
 
-    width: GridView.view.cellWidth
-    height: width
+    implicitWidth: GridView.view.cellWidth
+    implicitHeight: GridView.view.cellHeight
 
     property bool showLabel: true
 

@@ -20,6 +20,7 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls 2.12 as QQC2
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -169,595 +170,602 @@ PlasmaCore.Dialog {
         }
     }
 
-    PlasmaComponents3.TextField {
-        id: searchField
+    ColumnLayout {
+        anchors.fill: parent
 
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: systemFavoritesGrid.left
-        anchors.rightMargin: units.smallSpacing
+        PlasmaExtras.PlasmoidHeading {
+            contentItem: RowLayout {
+                PlasmaComponents3.TextField {
+                    id: searchField
 
-        width: parent.width
+                    Layout.fillWidth: true
 
-        placeholderText: i18n("Search...")
+                    placeholderText: i18n("Search...")
 
-        onTextChanged: {
-            runnerModel.query = text;
-        }
-
-        Keys.onPressed: {
-            if (event.key == Qt.Key_Down) {
-                event.accepted = true;
-                pageList.currentItem.itemGrid.tryActivate(0, 0);
-            } else if (event.key == Qt.Key_Right) {
-                if (cursorPosition == length) {
-                    event.accepted = true;
-
-                    if (pageList.currentItem.itemGrid.currentIndex == -1) {
-                        pageList.currentItem.itemGrid.tryActivate(0, 0);
-                    } else {
-                        pageList.currentItem.itemGrid.tryActivate(0, 1);
-                    }
-                }
-            } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
-                if (text != "" && pageList.currentItem.itemGrid.count > 0) {
-                    event.accepted = true;
-                    pageList.currentItem.itemGrid.tryActivate(0, 0);
-                    pageList.currentItem.itemGrid.model.trigger(0, "", null);
-                    root.visible = false;
-                }
-            } else if (event.key == Qt.Key_Tab) {
-                event.accepted = true;
-                systemFavoritesGrid.tryActivate(0, 0);
-            } else if (event.key == Qt.Key_Backtab) {
-                event.accepted = true;
-
-                if (!searching) {
-                    filterList.forceActiveFocus();
-                } else {
-                    systemFavoritesGrid.tryActivate(0, 0);
-                }
-            }
-        }
-
-        function backspace() {
-            if (!root.visible) {
-                return;
-            }
-
-            focus = true;
-            text = text.slice(0, -1);
-        }
-
-        function appendText(newText) {
-            if (!root.visible) {
-                return;
-            }
-
-            focus = true;
-            text = text + newText;
-        }
-    }
-
-    ItemGridView {
-        id: systemFavoritesGrid
-
-        anchors {
-            top: parent.top
-            right: parent.right
-        }
-
-        width: cellWidth * 4
-        height: searchField.height
-
-        cellWidth: height
-        cellHeight: height
-
-        iconSize: height - units.smallSpacing
-
-        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-
-        dragEnabled: true
-        showLabels: false
-
-        model: systemFavorites
-
-        onCurrentIndexChanged: {
-            focus = true;
-        }
-
-        onKeyNavLeft: {
-            currentIndex = -1;
-            searchField.focus = true;
-        }
-
-        onKeyNavDown: {
-            pageListScrollArea.focus = true;
-
-            if (pageList.currentItem) {
-                pageList.currentItem.itemGrid.tryActivate(0, 0);
-            }
-        }
-
-        Keys.onPressed: {
-            if (event.key == Qt.Key_Tab) {
-                event.accepted = true;
-
-                currentIndex = -1;
-
-                if (!searching) {
-                    filterList.forceActiveFocus();
-                } else {
-                    searchField.focus = true;
-                }
-            } else if (event.key == Qt.Key_Backtab) {
-                event.accepted = true;
-                currentIndex = -1;
-                searchField.focus = true;
-            }
-        }
-    }
-
-    PlasmaExtras.ScrollArea {
-        id: pageListScrollArea
-
-        anchors {
-            left: parent.left
-            top: searchField.bottom
-            topMargin: units.smallSpacing
-            bottom: paginationBar.top
-            bottomMargin: units.smallSpacing
-        }
-
-        width: (cellSize * 6)
-
-        focus: true
-
-        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-
-        ListView {
-            id: pageList
-
-            anchors.fill: parent
-
-            orientation: Qt.Horizontal
-            snapMode: ListView.SnapOneItem
-
-            currentIndex: 0
-
-            model: rootModel.modelForRow(0)
-
-            onCurrentIndexChanged: {
-                positionViewAtIndex(currentIndex, ListView.Contain);
-            }
-
-            onCurrentItemChanged: {
-                if (!currentItem) {
-                    return;
-                }
-
-                currentItem.itemGrid.focus = true;
-            }
-
-            onModelChanged: {
-                currentIndex = 0;
-            }
-
-            onFlickingChanged: {
-                if (!flicking) {
-                    var pos = mapToItem(contentItem, root.width / 2, root.height / 2);
-                    var itemIndex = indexAt(pos.x, pos.y);
-                    currentIndex = itemIndex;
-                }
-            }
-
-            function cycle() {
-                enabled = false;
-                enabled = true;
-            }
-
-            function activateNextPrev(next) {
-                if (next) {
-                    var newIndex = pageList.currentIndex + 1;
-
-                    if (newIndex == pageList.count) {
-                        newIndex = 0;
+                    onTextChanged: {
+                        runnerModel.query = text;
                     }
 
-                    pageList.currentIndex = newIndex;
-                } else {
-                    var newIndex = pageList.currentIndex - 1;
+                    Keys.onPressed: {
+                        if (event.key == Qt.Key_Down) {
+                            event.accepted = true;
+                            pageList.currentItem.itemGrid.tryActivate(0, 0);
+                        } else if (event.key == Qt.Key_Right) {
+                            if (cursorPosition == length) {
+                                event.accepted = true;
 
-                    if (newIndex < 0) {
-                        newIndex = (pageList.count - 1);
+                                if (pageList.currentItem.itemGrid.currentIndex == -1) {
+                                    pageList.currentItem.itemGrid.tryActivate(0, 0);
+                                } else {
+                                    pageList.currentItem.itemGrid.tryActivate(0, 1);
+                                }
+                            }
+                        } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
+                            if (text != "" && pageList.currentItem.itemGrid.count > 0) {
+                                event.accepted = true;
+                                pageList.currentItem.itemGrid.tryActivate(0, 0);
+                                pageList.currentItem.itemGrid.model.trigger(0, "", null);
+                                root.visible = false;
+                            }
+                        } else if (event.key == Qt.Key_Tab) {
+                            event.accepted = true;
+                            systemFavoritesGrid.tryActivate(0, 0);
+                        } else if (event.key == Qt.Key_Backtab) {
+                            event.accepted = true;
+
+                            if (!searching) {
+                                filterList.forceActiveFocus();
+                            } else {
+                                systemFavoritesGrid.tryActivate(0, 0);
+                            }
+                        }
                     }
 
-                    pageList.currentIndex = newIndex;
+                    function backspace() {
+                        if (!root.visible) {
+                            return;
+                        }
+
+                        focus = true;
+                        text = text.slice(0, -1);
+                    }
+
+                    function appendText(newText) {
+                        if (!root.visible) {
+                            return;
+                        }
+
+                        focus = true;
+                        text = text + newText;
+                    }
+                }
+
+                QQC2.ToolSeparator {
+                    Layout.fillHeight: true
+                }
+
+                Item {
+                    implicitWidth: plasmoid.configuration.showFilterList ? filterListScrollArea.Layout.preferredWidth : systemFavoritesGrid.cellWidth * 4
+                    implicitHeight: systemFavoritesGrid.cellHeight
+
+                    ItemGridView {
+                        id: systemFavoritesGrid
+
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        cellWidth: searchField.height
+                        cellHeight: searchField.height
+                        height: cellHeight
+                        width: cellWidth * count
+
+                        iconSize: height - units.smallSpacing
+
+                        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+                        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
+                        dragEnabled: true
+                        showLabels: false
+
+                        model: systemFavorites
+
+                        onCurrentIndexChanged: {
+                            focus = true;
+                        }
+
+                        onKeyNavLeft: {
+                            currentIndex = -1;
+                            searchField.focus = true;
+                        }
+
+                        onKeyNavDown: {
+                            pageListScrollArea.focus = true;
+
+                            if (pageList.currentItem) {
+                                pageList.currentItem.itemGrid.tryActivate(0, 0);
+                            }
+                        }
+
+                        Keys.onPressed: {
+                            if (event.key == Qt.Key_Tab) {
+                                event.accepted = true;
+
+                                currentIndex = -1;
+
+                                if (!searching) {
+                                    filterList.forceActiveFocus();
+                                } else {
+                                    searchField.focus = true;
+                                }
+                            } else if (event.key == Qt.Key_Backtab) {
+                                event.accepted = true;
+                                currentIndex = -1;
+                                searchField.focus = true;
+                            }
+                        }
+                    }
                 }
             }
+        }
 
-            delegate: Item {
-                width: cellSize * 6
-                height: cellSize * 4
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
 
-                property Item itemGrid: gridView
+            ColumnLayout {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
 
-                ItemGridView {
-                    id: gridView
+                PlasmaExtras.ScrollArea {
+                    id: pageListScrollArea
 
-                    anchors.fill: parent
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
 
-                    cellWidth: cellSize
-                    cellHeight: cellSize
+                    focus: true
+                    frameVisible: false
 
                     horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
                     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
-                    dragEnabled: (index == 0)
+                    ListView {
+                        id: pageList
 
-                    model: searching ? runnerModel.modelForRow(index) : rootModel.modelForRow(filterListScrollArea.visible ? filterList.currentIndex : 0).modelForRow(index)
+                        anchors.fill: parent
 
-                    onCurrentIndexChanged: {
-                        if (currentIndex != -1 && !searching) {
-                            pageListScrollArea.focus = true;
-                            focus = true;
+                        orientation: Qt.Horizontal
+                        snapMode: ListView.SnapOneItem
+
+                        currentIndex: 0
+
+                        model: rootModel.modelForRow(0)
+
+                        onCurrentIndexChanged: {
+                            positionViewAtIndex(currentIndex, ListView.Contain);
                         }
-                    }
 
-                    onCountChanged: {
-                        if (searching && index == 0) {
+                        onCurrentItemChanged: {
+                            if (!currentItem) {
+                                return;
+                            }
+
+                            currentItem.itemGrid.focus = true;
+                        }
+
+                        onModelChanged: {
                             currentIndex = 0;
                         }
-                    }
 
-                    onKeyNavUp: {
-                        currentIndex = -1;
-                        searchField.focus = true;
-                    }
-
-                    onKeyNavRight: {
-                        var newIndex = pageList.currentIndex + 1;
-                        var cRow = currentRow();
-
-                        if (newIndex == pageList.count) {
-                            newIndex = 0;
+                        onFlickingChanged: {
+                            if (!flicking) {
+                                var pos = mapToItem(contentItem, root.width / 2, root.height / 2);
+                                var itemIndex = indexAt(pos.x, pos.y);
+                                currentIndex = itemIndex;
+                            }
                         }
 
-                        pageList.currentIndex = newIndex;
-                        pageList.currentItem.itemGrid.tryActivate(cRow, 0);
-                    }
-
-                    onKeyNavLeft: {
-                        var newIndex = pageList.currentIndex - 1;
-                        var cRow = currentRow();
-
-                        if (newIndex < 0) {
-                            newIndex = (pageList.count - 1);
+                        function cycle() {
+                            enabled = false;
+                            enabled = true;
                         }
 
-                        pageList.currentIndex = newIndex;
-                        pageList.currentItem.itemGrid.tryActivate(cRow, 5);
+                        function activateNextPrev(next) {
+                            if (next) {
+                                var newIndex = pageList.currentIndex + 1;
+
+                                if (newIndex == pageList.count) {
+                                    newIndex = 0;
+                                }
+
+                                pageList.currentIndex = newIndex;
+                            } else {
+                                var newIndex = pageList.currentIndex - 1;
+
+                                if (newIndex < 0) {
+                                    newIndex = (pageList.count - 1);
+                                }
+
+                                pageList.currentIndex = newIndex;
+                            }
+                        }
+
+                        delegate: Item {
+                            width: cellSize * 6
+                            height: cellSize * 4
+
+                            property Item itemGrid: gridView
+
+                            ItemGridView {
+                                id: gridView
+
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                width: cellSize * 6
+                                height: cellSize * 4
+
+                                cellWidth: cellSize
+                                cellHeight: cellSize
+
+                                horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+                                verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
+                                dragEnabled: (index == 0)
+
+                                model: searching ? runnerModel.modelForRow(index) : rootModel.modelForRow(filterListScrollArea.visible ? filterList.currentIndex : 0).modelForRow(index)
+
+                                onCurrentIndexChanged: {
+                                    if (currentIndex != -1 && !searching) {
+                                        pageListScrollArea.focus = true;
+                                        focus = true;
+                                    }
+                                }
+
+                                onCountChanged: {
+                                    if (searching && index == 0) {
+                                        currentIndex = 0;
+                                    }
+                                }
+
+                                onKeyNavUp: {
+                                    currentIndex = -1;
+                                    searchField.focus = true;
+                                }
+
+                                onKeyNavRight: {
+                                    var newIndex = pageList.currentIndex + 1;
+                                    var cRow = currentRow();
+
+                                    if (newIndex == pageList.count) {
+                                        newIndex = 0;
+                                    }
+
+                                    pageList.currentIndex = newIndex;
+                                    pageList.currentItem.itemGrid.tryActivate(cRow, 0);
+                                }
+
+                                onKeyNavLeft: {
+                                    var newIndex = pageList.currentIndex - 1;
+                                    var cRow = currentRow();
+
+                                    if (newIndex < 0) {
+                                        newIndex = (pageList.count - 1);
+                                    }
+
+                                    pageList.currentIndex = newIndex;
+                                    pageList.currentItem.itemGrid.tryActivate(cRow, 5);
+                                }
+                            }
+
+                            Kicker.WheelInterceptor {
+                                anchors.fill: parent
+                                z: 1
+
+                                property int wheelDelta: 0
+
+                                function scrollByWheel(wheelDelta, eventDelta) {
+                                    // magic number 120 for common "one click"
+                                    // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
+                                    wheelDelta += eventDelta;
+
+                                    var increment = 0;
+
+                                    while (wheelDelta >= 120) {
+                                        wheelDelta -= 120;
+                                        increment++;
+                                    }
+
+                                    while (wheelDelta <= -120) {
+                                        wheelDelta += 120;
+                                        increment--;
+                                    }
+
+                                    while (increment != 0) {
+                                        pageList.activateNextPrev(increment < 0);
+                                        increment += (increment < 0) ? 1 : -1;
+                                    }
+
+                                    return wheelDelta;
+                                }
+
+                                onWheelMoved: {
+                                    wheelDelta = scrollByWheel(wheelDelta, delta.y);
+                                }
+                            }
+                        }
                     }
                 }
 
-                Kicker.WheelInterceptor {
-                    anchors.fill: parent
-                    z: 1
+                ListView {
+                    id: paginationBar
 
-                    property int wheelDelta: 0
+                    Layout.alignment: Qt.AlignHCenter
 
-                    function scrollByWheel(wheelDelta, eventDelta) {
-                        // magic number 120 for common "one click"
-                        // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
-                        wheelDelta += eventDelta;
+                    width: model.count * units.iconSizes.small
+                    height: units.iconSizes.small
 
-                        var increment = 0;
+                    orientation: Qt.Horizontal
 
-                        while (wheelDelta >= 120) {
-                            wheelDelta -= 120;
-                            increment++;
+                    model: rootModel.modelForRow(0)
+
+                    delegate: Item {
+                        width: units.iconSizes.small
+                        height: width
+
+                        Rectangle {
+                            id: pageDelegate
+
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                verticalCenter: parent.verticalCenter
+                            }
+
+                            width: parent.width / 2
+                            height: width
+
+                            property bool isCurrent: (pageList.currentIndex == index)
+
+                            radius: width / 2
+
+                            color: theme.textColor
+                            opacity: 0.5
+
+                            Behavior on width { SmoothedAnimation { duration: units.longDuration; velocity: 0.01 } }
+                            Behavior on opacity { SmoothedAnimation { duration: units.longDuration; velocity: 0.01 } }
+
+                            states: [
+                                State {
+                                    when: pageDelegate.isCurrent
+                                    PropertyChanges { target: pageDelegate; width: parent.width - (units.smallSpacing * 2) }
+                                    PropertyChanges { target: pageDelegate; opacity: 0.8 }
+                                }
+                            ]
                         }
 
-                        while (wheelDelta <= -120) {
-                            wheelDelta += 120;
-                            increment--;
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: pageList.currentIndex = index;
+
+                            property int wheelDelta: 0
+
+                            function scrollByWheel(wheelDelta, eventDelta) {
+                                // magic number 120 for common "one click"
+                                // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
+                                wheelDelta += eventDelta;
+
+                                var increment = 0;
+
+                                while (wheelDelta >= 120) {
+                                    wheelDelta -= 120;
+                                    increment++;
+                                }
+
+                                while (wheelDelta <= -120) {
+                                    wheelDelta += 120;
+                                    increment--;
+                                }
+
+                                while (increment != 0) {
+                                    pageList.activateNextPrev(increment < 0);
+                                    increment += (increment < 0) ? 1 : -1;
+                                }
+
+                                return wheelDelta;
+                            }
+
+                            onWheel: {
+                                wheelDelta = scrollByWheel(wheelDelta, wheel.angleDelta.y);
+                            }
                         }
-
-                        while (increment != 0) {
-                            pageList.activateNextPrev(increment < 0);
-                            increment += (increment < 0) ? 1 : -1;
-                        }
-
-                        return wheelDelta;
-                    }
-
-                    onWheelMoved: {
-                        wheelDelta = scrollByWheel(wheelDelta, delta.y);
                     }
                 }
             }
-        }
-    }
 
-    ListView {
-        id: paginationBar
+            QQC2.ToolSeparator {
+                Layout.fillHeight: true
+            }
 
-        anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-        }
+            PlasmaExtras.ScrollArea {
+                id: filterListScrollArea
 
-        width: model.count * units.iconSizes.small
-        height: units.iconSizes.small
+                property int desiredWidth: 0
 
-        orientation: Qt.Horizontal
+                Layout.fillHeight: true
+                Layout.preferredWidth: plasmoid.configuration.showFilterList ? desiredWidth : 0
 
-        model: rootModel.modelForRow(0)
+                enabled: !searching
+                visible: plasmoid.configuration.showFilterList
 
-        delegate: Item {
-            width: units.iconSizes.small
-            height: width
+                property alias currentIndex: filterList.currentIndex
 
-            Rectangle {
-                id: pageDelegate
+                opacity: root.visible ? (searching ? 0.30 : 1.0) : 0.3
 
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-
-                width: parent.width / 2
-                height: width
-
-                property bool isCurrent: (pageList.currentIndex == index)
-
-                radius: width / 2
-
-                color: theme.textColor
-                opacity: 0.5
-
-                Behavior on width { SmoothedAnimation { duration: units.longDuration; velocity: 0.01 } }
                 Behavior on opacity { SmoothedAnimation { duration: units.longDuration; velocity: 0.01 } }
 
-                states: [
-                    State {
-                        when: pageDelegate.isCurrent
-                        PropertyChanges { target: pageDelegate; width: parent.width - (units.smallSpacing * 2) }
-                        PropertyChanges { target: pageDelegate; opacity: 0.8 }
-                    }
-                ]
-            }
+                verticalScrollBarPolicy: (opacity == 1.0) ? Qt.ScrollBarAsNeeded : Qt.ScrollBarAlwaysOff
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: pageList.currentIndex = index;
-
-                property int wheelDelta: 0
-
-                function scrollByWheel(wheelDelta, eventDelta) {
-                    // magic number 120 for common "one click"
-                    // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
-                    wheelDelta += eventDelta;
-
-                    var increment = 0;
-
-                    while (wheelDelta >= 120) {
-                        wheelDelta -= 120;
-                        increment++;
-                    }
-
-                    while (wheelDelta <= -120) {
-                        wheelDelta += 120;
-                        increment--;
-                    }
-
-                    while (increment != 0) {
-                        pageList.activateNextPrev(increment < 0);
-                        increment += (increment < 0) ? 1 : -1;
-                    }
-
-                    return wheelDelta;
-                }
-
-                onWheel: {
-                    wheelDelta = scrollByWheel(wheelDelta, wheel.angleDelta.y);
-                }
-            }
-        }
-    }
-
-    PlasmaExtras.ScrollArea {
-        id: filterListScrollArea
-
-        anchors {
-            left: pageListScrollArea.right
-            leftMargin: units.smallSpacing
-            top: searchField.bottom
-            topMargin: units.smallSpacing
-            bottom: paginationBar.top
-            bottomMargin: units.smallSpacing
-        }
-
-        property int desiredWidth: 0
-
-        width: plasmoid.configuration.showFilterList ? desiredWidth : 0
-
-        enabled: !searching
-        visible: plasmoid.configuration.showFilterList
-
-        property alias currentIndex: filterList.currentIndex
-
-        opacity: root.visible ? (searching ? 0.30 : 1.0) : 0.3
-
-        Behavior on opacity { SmoothedAnimation { duration: units.longDuration; velocity: 0.01 } }
-
-        verticalScrollBarPolicy: (opacity == 1.0) ? Qt.ScrollBarAsNeeded : Qt.ScrollBarAlwaysOff
-
-        onEnabledChanged: {
-            if (!enabled) {
-                filterList.currentIndex = -1;
-            }
-        }
-
-        ListView {
-            id: filterList
-
-            focus: true
-
-            property bool allApps: false
-            property int eligibleWidth: width
-            property int hItemMargins: highlightItemSvg.margins.left + highlightItemSvg.margins.right
-            model: filterListScrollArea.visible ? rootModel : null
-
-            boundsBehavior: Flickable.StopAtBounds
-            snapMode: ListView.SnapToItem
-            spacing: 0
-            keyNavigationWraps: true
-
-            delegate: MouseArea {
-                id: item
-
-                property int textWidth: label.contentWidth
-                property int mouseCol
-
-                width: parent.width
-                height: label.paintedHeight + highlightItemSvg.margins.top + highlightItemSvg.margins.bottom
-
-                Accessible.role: Accessible.MenuItem
-                Accessible.name: model.display
-
-                acceptedButtons: Qt.LeftButton
-
-                hoverEnabled: true
-
-                onContainsMouseChanged: {
-                    if (!containsMouse) {
-                        updateCurrentItemTimer.stop();
+                onEnabledChanged: {
+                    if (!enabled) {
+                        filterList.currentIndex = -1;
                     }
                 }
 
-                onPressed: {
-                    if (!plasmoid.configuration.switchCategoriesOnHover) {
-                        ListView.view.currentIndex = index;
-                    }
-                }
+                ListView {
+                    id: filterList
 
-                onPositionChanged: { // Lazy menu implementation.
-                    if (!plasmoid.configuration.switchCategoriesOnHover) {
-                        return;
-                    }
+                    focus: true
 
-                    mouseCol = mouse.x;
+                    property bool allApps: false
+                    property int eligibleWidth: width
+                    property int hItemMargins: highlightItemSvg.margins.left + highlightItemSvg.margins.right
+                    model: filterListScrollArea.visible ? rootModel : null
 
-                    if (index == ListView.view.currentIndex) {
-                        updateCurrentItem();
-                    } else if ((index == ListView.view.currentIndex - 1) && mouse.y < (item.height - 6)
-                        || (index == ListView.view.currentIndex + 1) && mouse.y > 5) {
+                    boundsBehavior: Flickable.StopAtBounds
+                    snapMode: ListView.SnapToItem
+                    spacing: 0
+                    keyNavigationWraps: true
 
-                        if (mouse.x > ListView.view.eligibleWidth - 5) {
-                            updateCurrentItem();
+                    delegate: MouseArea {
+                        id: item
+
+                        property int textWidth: label.contentWidth
+                        property int mouseCol
+
+                        width: parent.width
+                        height: label.paintedHeight + highlightItemSvg.margins.top + highlightItemSvg.margins.bottom
+
+                        Accessible.role: Accessible.MenuItem
+                        Accessible.name: model.display
+
+                        acceptedButtons: Qt.LeftButton
+
+                        hoverEnabled: true
+
+                        onContainsMouseChanged: {
+                            if (!containsMouse) {
+                                updateCurrentItemTimer.stop();
+                            }
                         }
-                    } else if (mouse.x > ListView.view.eligibleWidth) {
-                        updateCurrentItem();
+
+                        onPressed: {
+                            if (!plasmoid.configuration.switchCategoriesOnHover) {
+                                ListView.view.currentIndex = index;
+                            }
+                        }
+
+                        onPositionChanged: { // Lazy menu implementation.
+                            if (!plasmoid.configuration.switchCategoriesOnHover) {
+                                return;
+                            }
+
+                            mouseCol = mouse.x;
+
+                            if (index == ListView.view.currentIndex) {
+                                updateCurrentItem();
+                            } else if ((index == ListView.view.currentIndex - 1) && mouse.y < (item.height - 6)
+                                || (index == ListView.view.currentIndex + 1) && mouse.y > 5) {
+
+                                if (mouse.x > ListView.view.eligibleWidth - 5) {
+                                    updateCurrentItem();
+                                }
+                            } else if (mouse.x > ListView.view.eligibleWidth) {
+                                updateCurrentItem();
+                            }
+
+                            updateCurrentItemTimer.start();
+                        }
+
+                        function updateCurrentItem() {
+                            ListView.view.currentIndex = index;
+                            ListView.view.eligibleWidth = Math.min(width, mouseCol);
+                        }
+
+                        Timer {
+                            id: updateCurrentItemTimer
+
+                            interval: 50
+                            repeat: false
+
+                            onTriggered: parent.updateCurrentItem()
+                        }
+
+                        PlasmaExtras.Heading {
+                            id: label
+
+                            anchors {
+                                fill: parent
+                                leftMargin: highlightItemSvg.margins.left
+                                rightMargin: highlightItemSvg.margins.right
+                            }
+
+                            elide: Text.ElideRight
+                            wrapMode: Text.NoWrap
+                            opacity: 1.0
+
+                            level: 5
+
+                            text: model.display
+                        }
                     }
 
-                    updateCurrentItemTimer.start();
-                }
+                    highlight: PlasmaComponents.Highlight {
+                        anchors {
+                            top: filterList.currentItem ? filterList.currentItem.top : undefined
+                            left: filterList.currentItem ? filterList.currentItem.left : undefined
+                            bottom: filterList.currentItem ? filterList.currentItem.bottom : undefined
+                        }
 
-                function updateCurrentItem() {
-                    ListView.view.currentIndex = index;
-                    ListView.view.eligibleWidth = Math.min(width, mouseCol);
-                }
+                        opacity: filterListScrollArea.focus ? 1.0 : 0.7
 
-                Timer {
-                    id: updateCurrentItemTimer
+                        width: (highlightItemSvg.margins.left
+                            + filterList.currentItem.textWidth
+                            + highlightItemSvg.margins.right
+                            + units.smallSpacing)
 
-                    interval: 50
-                    repeat: false
-
-                    onTriggered: parent.updateCurrentItem()
-                }
-
-                PlasmaExtras.Heading {
-                    id: label
-
-                    anchors {
-                        fill: parent
-                        leftMargin: highlightItemSvg.margins.left
-                        rightMargin: highlightItemSvg.margins.right
+                        visible: filterList.currentItem
                     }
 
-                    elide: Text.ElideRight
-                    wrapMode: Text.NoWrap
-                    opacity: 1.0
+                    highlightFollowsCurrentItem: false
+                    highlightMoveDuration: 0
+                    highlightResizeDuration: 0
 
-                    level: 5
+                    onCurrentIndexChanged: applyFilter()
 
-                    text: model.display
-                }
-            }
+                    onCountChanged: {
+                        var width = 0;
 
-            highlight: PlasmaComponents.Highlight {
-                anchors {
-                    top: filterList.currentItem ? filterList.currentItem.top : undefined
-                    left: filterList.currentItem ? filterList.currentItem.left : undefined
-                    bottom: filterList.currentItem ? filterList.currentItem.bottom : undefined
-                }
+                        for (var i = 0; i < rootModel.count; ++i) {
+                            headingMetrics.text = rootModel.labelForRow(i);
 
-                opacity: filterListScrollArea.focus ? 1.0 : 0.7
+                            if (headingMetrics.width > width) {
+                                width = headingMetrics.width;
+                            }
+                        }
 
-                width: (highlightItemSvg.margins.left
-                    + filterList.currentItem.textWidth
-                    + highlightItemSvg.margins.right
-                    + units.smallSpacing)
-
-                visible: filterList.currentItem
-            }
-
-            highlightFollowsCurrentItem: false
-            highlightMoveDuration: 0
-            highlightResizeDuration: 0
-
-            onCurrentIndexChanged: applyFilter()
-
-            onCountChanged: {
-                var width = 0;
-
-                for (var i = 0; i < rootModel.count; ++i) {
-                    headingMetrics.text = rootModel.labelForRow(i);
-
-                    if (headingMetrics.width > width) {
-                        width = headingMetrics.width;
+                        filterListScrollArea.desiredWidth = width + hItemMargins + units.gridUnit;
                     }
-                }
 
-                filterListScrollArea.desiredWidth = width + hItemMargins + units.gridUnit;
-            }
-
-            function applyFilter() {
-                if (filterListScrollArea.visible && !searching && currentIndex >= 0) {
-                    pageList.model = rootModel.modelForRow(currentIndex);
-                    paginationBar.model = pageList.model;
-                }
-            }
-
-            Keys.onPressed: {
-                if (event.key == Qt.Key_left) {
-                    event.accepted = true;
-
-                    var currentRow = Math.max(0, Math.ceil(currentItem.y / cellSize) - 1);
-
-                    if (pageList.currentItem) {
-                        pageList.currentItem.itemGrid.tryActivate(currentRow, 5);
+                    function applyFilter() {
+                        if (filterListScrollArea.visible && !searching && currentIndex >= 0) {
+                            pageList.model = rootModel.modelForRow(currentIndex);
+                            paginationBar.model = pageList.model;
+                        }
                     }
-                } else if (event.key == Qt.Key_Tab) {
-                    event.accepted = true;
-                    searchField.focus = true;
-                } else if (event.key == Qt.Key_Backtab) {
-                    event.accepted = true;
-                    systemFavoritesGrid.tryActivate(0, 0);
+
+                    Keys.onPressed: {
+                        if (event.key == Qt.Key_left) {
+                            event.accepted = true;
+
+                            var currentRow = Math.max(0, Math.ceil(currentItem.y / cellSize) - 1);
+
+                            if (pageList.currentItem) {
+                                pageList.currentItem.itemGrid.tryActivate(currentRow, 5);
+                            }
+                        } else if (event.key == Qt.Key_Tab) {
+                            event.accepted = true;
+                            searchField.focus = true;
+                        } else if (event.key == Qt.Key_Backtab) {
+                            event.accepted = true;
+                            systemFavoritesGrid.tryActivate(0, 0);
+                        }
+                    }
                 }
             }
         }

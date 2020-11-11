@@ -52,6 +52,9 @@ FocusScope {
     property alias horizontalScrollBarPolicy: scrollArea.horizontalScrollBarPolicy
     property alias verticalScrollBarPolicy: scrollArea.verticalScrollBarPolicy
 
+    implicitWidth: gridView.contentWidth
+    implicitHeight: gridView.contentHeight
+
     onFocusChanged: {
         if (!focus) {
             currentIndex = -1;
