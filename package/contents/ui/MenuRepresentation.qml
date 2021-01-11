@@ -174,6 +174,9 @@ PlasmaCore.Dialog {
         anchors.fill: parent
 
         PlasmaExtras.PlasmoidHeading {
+            leftPadding: 0
+            rightPadding: 0
+
             contentItem: RowLayout {
                 PlasmaComponents3.TextField {
                     id: searchField
