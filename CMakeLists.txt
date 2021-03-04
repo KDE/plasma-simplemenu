@@ -2,7 +2,7 @@ project(simplemenu)
 set(PROJECT_VERSION "1.0.12")
 set(PROJECT_VERSION_MAJOR 1)
 
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16)
 set(QT_MIN_VERSION "5.4.0")
 
 find_package(ECM 0.0.11 REQUIRED NO_MODULE)
