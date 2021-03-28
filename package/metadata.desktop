@@ -32,6 +32,7 @@ Name[sl]=Simple Menu
 Name[sv]=Enkel meny
 Name[uk]=Просте меню
 Name[x-test]=xxSimple Menuxx
+Name[zh_CN]=简易菜单
 Name[zh_TW]=簡易選單
 Comment=A simple launcher menu
 Comment[az]=Sadə tətbiq başlatma menyusu
@@ -66,6 +67,7 @@ Comment[sl]=Preprosti zagonski meni
 Comment[sv]=En enkel startmeny
 Comment[uk]=Просте меню для запуску програм
 Comment[x-test]=xxA simple launcher menuxx
+Comment[zh_CN]=简易启动器菜单
 Comment[zh_TW]=簡易的啟動器選單
 
 Type=Service
