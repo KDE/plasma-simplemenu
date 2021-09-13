@@ -99,21 +99,21 @@ PlasmaCore.Dialog {
             var horizMidPoint = screen.x + (screen.width / 2);
             var appletTopLeft = parent.mapToGlobal(0, 0);
             x = (appletTopLeft.x < horizMidPoint) ? screen.x + offset : (screen.x + screen.width) - width - offset;
-            y = screen.height - height - offset - panelSvg.margins.top;
+            y = screenGeom.y + screen.height - height - offset - panelSvg.margins.top;
         } else if (plasmoid.location == PlasmaCore.Types.TopEdge) {
             var horizMidPoint = screen.x + (screen.width / 2);
             var appletBottomLeft = parent.mapToGlobal(0, parent.height);
             x = (appletBottomLeft.x < horizMidPoint) ? screen.x + offset : (screen.x + screen.width) - width - offset;
-            y = parent.height + panelSvg.margins.bottom + offset;
+            y = screenGeom.y + parent.height + panelSvg.margins.bottom + offset;
         } else if (plasmoid.location == PlasmaCore.Types.LeftEdge) {
             var vertMidPoint = screen.y + (screen.height / 2);
             var appletTopLeft = parent.mapToGlobal(0, 0);
-            x = parent.width + panelSvg.margins.right + offset;
+            x = screenGeom.x + parent.width + panelSvg.margins.right + offset;
             y = (appletTopLeft.y < vertMidPoint) ? screen.y + offset : (screen.y + screen.height) - height - offset;
         } else if (plasmoid.location == PlasmaCore.Types.RightEdge) {
             var vertMidPoint = screen.y + (screen.height / 2);
             var appletTopLeft = parent.mapToGlobal(0, 0);
-            x = appletTopLeft.x - panelSvg.margins.left - offset - width;
+            x = screenGeom.x + appletTopLeft.x - panelSvg.margins.left - offset - width;
             y = (appletTopLeft.y < vertMidPoint) ? screen.y + offset : (screen.y + screen.height) - height - offset;
         }
 
