@@ -21,6 +21,9 @@ include(CheckIncludeFiles)
 set(KF5_MIN_VERSION "5.24.0")
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     Plasma
+    I18n
 )
 
 plasma_install_package(package org.kde.plasma.simplemenu)
+
+ki18n_install(po)
