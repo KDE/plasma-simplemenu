@@ -1,0 +1,121 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the plasma-simplemenu package.
+#
+# Stelios <sstavra@gmail.com>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma-simplemenu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-29 00:19+0000\n"
+"PO-Revision-Date: 2019-08-01 08:54+0300\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 18.12.3\n"
+
+#: package/contents/code/tools.js:42 package/contents/code/tools.js:141
+#, kde-format
+msgid "Remove from Favorites"
+msgstr "Αφαίρεση από τα αγαπημένα"
+
+#: package/contents/code/tools.js:46 package/contents/code/tools.js:145
+#, kde-format
+msgid "Add to Favorites"
+msgstr "Προσθήκη στα αγαπημένα"
+
+#: package/contents/code/tools.js:68
+#, kde-format
+msgid "On All Activities"
+msgstr "Σε όλες τις δραστηριότητες"
+
+#: package/contents/code/tools.js:118
+#, kde-format
+msgid "On The Current Activity"
+msgstr "Στην τρέχουσα δραστηριότητα"
+
+#: package/contents/code/tools.js:132
+#, kde-format
+msgid "Show In Favorites"
+msgstr "Να εμφανίζεται στα αγαπημένα"
+
+#: package/contents/config/config.qml:13
+#, kde-format
+msgid "General"
+msgstr "Γενικά"
+
+#: package/contents/ui/ConfigGeneral.qml:42
+#, kde-format
+msgid "Icon:"
+msgstr "Εικονίδιο:"
+
+#: package/contents/ui/ConfigGeneral.qml:129
+#, kde-format
+msgctxt "@item:inmenu Open icon chooser dialog"
+msgid "Choose..."
+msgstr "Επιλογή..."
+
+#: package/contents/ui/ConfigGeneral.qml:134
+#, kde-format
+msgctxt "@item:inmenu Reset icon to default"
+msgid "Clear Icon"
+msgstr "Καθαρισμός εικονιδίου"
+
+#: package/contents/ui/ConfigGeneral.qml:146
+#, kde-format
+msgid "Behavior"
+msgstr "Συμπεριφορά"
+
+#: package/contents/ui/ConfigGeneral.qml:153
+#, kde-format
+msgid "Show applications as:"
+msgstr "Εμφάνιση εφαρμογής ως:"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name only"
+msgstr "Όνομα μόνο"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description only"
+msgstr "Περιγραφή μόνο"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name (Description)"
+msgstr "Όνομα (Περιγραφή)"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description (Name)"
+msgstr "Περιγραφή (Όνομα)"
+
+#: package/contents/ui/ConfigGeneral.qml:168
+#, kde-format
+msgid "Switch categories on hover"
+msgstr "Εναλλαγή κατηγοριών σε αιώρηση"
+
+#: package/contents/ui/ConfigGeneral.qml:176
+#, kde-format
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: package/contents/ui/ConfigGeneral.qml:184
+#, kde-format
+msgid "Expand search to bookmarks, files and emails"
+msgstr ""
+"Επέκταση αναζήτησης σε σελιδοδείκτες, αρχεία και ηλεκτρονικό ταχυδρομείο"
+
+#: package/contents/ui/main.qml:186
+#, kde-format
+msgid "Edit Applications..."
+msgstr "Επεξεργασία εφαρμογών..."
+
+#: package/contents/ui/MenuRepresentation.qml:173
+#, kde-format
+msgid "Search..."
+msgstr "Αναζήτηση..."

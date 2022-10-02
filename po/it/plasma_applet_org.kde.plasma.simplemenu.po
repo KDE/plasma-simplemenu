@@ -1,0 +1,130 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Vincenzo Reale <smart2128vr@gmail.com>, 2014, 2015, 2017.
+# Paolo Zamponi <zapaolo@email.it>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma_applet_org.kde.homerun\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-29 00:19+0000\n"
+"PO-Revision-Date: 2019-05-02 08:44+0200\n"
+"Last-Translator: Paolo Zamponi <zapaolo@email.it>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 19.04.0\n"
+
+#: package/contents/code/tools.js:42 package/contents/code/tools.js:141
+#, kde-format
+msgid "Remove from Favorites"
+msgstr "Rimuovi dai preferiti"
+
+#: package/contents/code/tools.js:46 package/contents/code/tools.js:145
+#, kde-format
+msgid "Add to Favorites"
+msgstr "Aggiungi ai preferiti"
+
+#: package/contents/code/tools.js:68
+#, kde-format
+msgid "On All Activities"
+msgstr "In tutte le attività"
+
+#: package/contents/code/tools.js:118
+#, kde-format
+msgid "On The Current Activity"
+msgstr "Nell'attività attuale"
+
+#: package/contents/code/tools.js:132
+#, kde-format
+msgid "Show In Favorites"
+msgstr "Mostra nei preferiti"
+
+#: package/contents/config/config.qml:13
+#, kde-format
+msgid "General"
+msgstr "Generale"
+
+#: package/contents/ui/ConfigGeneral.qml:42
+#, kde-format
+msgid "Icon:"
+msgstr "Icona:"
+
+#: package/contents/ui/ConfigGeneral.qml:129
+#, kde-format
+msgctxt "@item:inmenu Open icon chooser dialog"
+msgid "Choose..."
+msgstr "Scegli..."
+
+#: package/contents/ui/ConfigGeneral.qml:134
+#, kde-format
+msgctxt "@item:inmenu Reset icon to default"
+msgid "Clear Icon"
+msgstr "Ripristina icona"
+
+#: package/contents/ui/ConfigGeneral.qml:146
+#, kde-format
+msgid "Behavior"
+msgstr "Comportamento"
+
+#: package/contents/ui/ConfigGeneral.qml:153
+#, kde-format
+msgid "Show applications as:"
+msgstr "Mostra applicazioni come:"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name only"
+msgstr "Solo il nome"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description only"
+msgstr "Solo la descrizione"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name (Description)"
+msgstr "Nome (Descrizione)"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description (Name)"
+msgstr "Descrizione (Nome)"
+
+#: package/contents/ui/ConfigGeneral.qml:168
+#, kde-format
+msgid "Switch categories on hover"
+msgstr "Cambia le categorie al passaggio del mouse"
+
+#: package/contents/ui/ConfigGeneral.qml:176
+#, kde-format
+msgid "Search"
+msgstr "Cerca"
+
+#: package/contents/ui/ConfigGeneral.qml:184
+#, kde-format
+msgid "Expand search to bookmarks, files and emails"
+msgstr "Espandi la ricerca ai segnalibri, ai file e alla posta elettronica"
+
+#: package/contents/ui/main.qml:186
+#, kde-format
+msgid "Edit Applications..."
+msgstr "Modifica applicazioni..."
+
+#: package/contents/ui/MenuRepresentation.qml:173
+#, kde-format
+msgid "Search..."
+msgstr "Cerca..."
+
+#~ msgid "Use custom image:"
+#~ msgstr "Utilizza immagine personalizzata:"
+
+#~ msgid "Choose an image"
+#~ msgstr "Scegli un'immagine"
+
+#~ msgid "Image Files (*.png *.jpg *.jpeg *.bmp *.svg *.svgz)"
+#~ msgstr "File immagine (*.png *.jpg *.jpeg *.bmp *.svg *.svgz)"

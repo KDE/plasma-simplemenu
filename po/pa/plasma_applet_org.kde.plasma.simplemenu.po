@@ -1,0 +1,120 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the plasma-simplemenu package.
+#
+# A S Alam <aalam.yellow@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma-simplemenu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-29 00:19+0000\n"
+"PO-Revision-Date: 2021-01-23 15:31-0800\n"
+"Last-Translator: A S Alam <aalam.yellow@gmail.com>\n"
+"Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
+"Language: pa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 20.08.1\n"
+
+#: package/contents/code/tools.js:42 package/contents/code/tools.js:141
+#, kde-format
+msgid "Remove from Favorites"
+msgstr "ਮਨਪਸੰਦ ਵਿੱਚੋਂ ਹਟਾਓ"
+
+#: package/contents/code/tools.js:46 package/contents/code/tools.js:145
+#, kde-format
+msgid "Add to Favorites"
+msgstr "ਮਨਪਸੰਦ ਵਿੱਚ ਜੋੜੋ"
+
+#: package/contents/code/tools.js:68
+#, kde-format
+msgid "On All Activities"
+msgstr "ਸਭ ਸਰਗਰਮੀਆਂ ਉੱਤੇ"
+
+#: package/contents/code/tools.js:118
+#, kde-format
+msgid "On The Current Activity"
+msgstr "ਮੌਜੂਦਾ ਸਰਗਰਮੀ ਉੱਤੇ"
+
+#: package/contents/code/tools.js:132
+#, kde-format
+msgid "Show In Favorites"
+msgstr "ਮਨਪਸੰਦੀਦਾ ਵਿੱਚ ਵੇਖਾਓ"
+
+#: package/contents/config/config.qml:13
+#, kde-format
+msgid "General"
+msgstr "ਆਮ"
+
+#: package/contents/ui/ConfigGeneral.qml:42
+#, kde-format
+msgid "Icon:"
+msgstr "ਆਈਕਾਨ:"
+
+#: package/contents/ui/ConfigGeneral.qml:129
+#, kde-format
+msgctxt "@item:inmenu Open icon chooser dialog"
+msgid "Choose..."
+msgstr "...ਚੁਣੋ"
+
+#: package/contents/ui/ConfigGeneral.qml:134
+#, kde-format
+msgctxt "@item:inmenu Reset icon to default"
+msgid "Clear Icon"
+msgstr "ਆਈਕਾਨ ਮਿਟਾਓ"
+
+#: package/contents/ui/ConfigGeneral.qml:146
+#, kde-format
+msgid "Behavior"
+msgstr "ਰਵੱਈਆ"
+
+#: package/contents/ui/ConfigGeneral.qml:153
+#, kde-format
+msgid "Show applications as:"
+msgstr "ਐਪਲੀਕੇਸ਼ਨਾਂ ਨੂੰ ਇੰਝ ਵੇਖਾਓ:"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name only"
+msgstr "ਸਿਰਫ਼ ਨਾਂ"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description only"
+msgstr "ਸਿਰਫ਼ ਵਰਣਨ"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name (Description)"
+msgstr "ਨਾਂ (ਵਰਣਨ)"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description (Name)"
+msgstr "ਵਰਣਨ (ਨਾਂ)"
+
+#: package/contents/ui/ConfigGeneral.qml:168
+#, kde-format
+msgid "Switch categories on hover"
+msgstr "ਹੋਵਰ ਉੱਤੇ ਕੈਟਾਗਰੀਆਂ ਬਦਲੋ"
+
+#: package/contents/ui/ConfigGeneral.qml:176
+#, kde-format
+msgid "Search"
+msgstr "ਖੋਜੋ"
+
+#: package/contents/ui/ConfigGeneral.qml:184
+#, kde-format
+msgid "Expand search to bookmarks, files and emails"
+msgstr "ਖੋਜ ਨੂੰ ਬੁੱਕਮਾਰਕ, ਫਾਇਲਾਂ ਤੇ ਈਮੇਲਾਂ ਲਈ ਵਧਾਓ"
+
+#: package/contents/ui/main.qml:186
+#, kde-format
+msgid "Edit Applications..."
+msgstr "...ਐਪਲੀਕੇਸ਼ਨਾਂ ਨੂੰ ਸੋਧੋ"
+
+#: package/contents/ui/MenuRepresentation.qml:173
+#, kde-format
+msgid "Search..."
+msgstr "...ਖੋਜੋ"
