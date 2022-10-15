@@ -1,0 +1,120 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the plasma-simplemenu package.
+#
+# Sveinn í Felli <sv1@fellsnet.is>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma-simplemenu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-06-29 00:19+0000\n"
+"PO-Revision-Date: 2022-10-14 15:18+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 21.12.3\n"
+
+#: package/contents/code/tools.js:42 package/contents/code/tools.js:141
+#, kde-format
+msgid "Remove from Favorites"
+msgstr "Fjarlægja úr eftirlætum"
+
+#: package/contents/code/tools.js:46 package/contents/code/tools.js:145
+#, kde-format
+msgid "Add to Favorites"
+msgstr "Bæta í eftirlæti"
+
+#: package/contents/code/tools.js:68
+#, kde-format
+msgid "On All Activities"
+msgstr "Í öllum athöfnum"
+
+#: package/contents/code/tools.js:118
+#, kde-format
+msgid "On The Current Activity"
+msgstr "Í núverandi athöfn"
+
+#: package/contents/code/tools.js:132
+#, kde-format
+msgid "Show In Favorites"
+msgstr "Birta í eftirlætum"
+
+#: package/contents/config/config.qml:13
+#, kde-format
+msgid "General"
+msgstr "Almennt"
+
+#: package/contents/ui/ConfigGeneral.qml:42
+#, kde-format
+msgid "Icon:"
+msgstr "Táknmynd:"
+
+#: package/contents/ui/ConfigGeneral.qml:129
+#, kde-format
+msgctxt "@item:inmenu Open icon chooser dialog"
+msgid "Choose..."
+msgstr "Velja..."
+
+#: package/contents/ui/ConfigGeneral.qml:134
+#, kde-format
+msgctxt "@item:inmenu Reset icon to default"
+msgid "Clear Icon"
+msgstr "Hreinsa táknmynd"
+
+#: package/contents/ui/ConfigGeneral.qml:146
+#, kde-format
+msgid "Behavior"
+msgstr "Hegðun"
+
+#: package/contents/ui/ConfigGeneral.qml:153
+#, kde-format
+msgid "Show applications as:"
+msgstr "Birta forrit sem:"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name only"
+msgstr "Einungis heiti"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description only"
+msgstr "Einungis lýsing"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name (Description)"
+msgstr "Heiti (lýsing)"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description (Name)"
+msgstr "Lýsing (heiti)"
+
+#: package/contents/ui/ConfigGeneral.qml:168
+#, kde-format
+msgid "Switch categories on hover"
+msgstr "Skipta um flokka við yfirsvif"
+
+#: package/contents/ui/ConfigGeneral.qml:176
+#, kde-format
+msgid "Search"
+msgstr "Leita"
+
+#: package/contents/ui/ConfigGeneral.qml:184
+#, kde-format
+msgid "Expand search to bookmarks, files and emails"
+msgstr "Útvíka leit til bókamerkja, skráa og tölvupóst"
+
+#: package/contents/ui/main.qml:186
+#, kde-format
+msgid "Edit Applications..."
+msgstr "Breita forritum..."
+
+#: package/contents/ui/MenuRepresentation.qml:173
+#, kde-format
+msgid "Search..."
+msgstr "Leita..."
