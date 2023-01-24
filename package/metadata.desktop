@@ -2,6 +2,7 @@
 Name=Simple Menu
 Name[ar]=القائمة البسيطة
 Name[az]=Sadə menyu
+Name[be]=Простае меню
 Name[ca]=Menú simple
 Name[ca@valencia]=Menú simple
 Name[cs]=Jednoduchá nabídka
@@ -44,6 +45,7 @@ Name[zh_TW]=簡易選單
 Comment=A simple launcher menu
 Comment[ar]=مُطلِق تطبيقات بسيط
 Comment[az]=Sadə tətbiq başlatma menyusu
+Comment[be]=Простае меню запуску
 Comment[ca]=Un llançador d'aplicacions simple
 Comment[ca@valencia]=Un iniciador d'aplicacions simple
 Comment[cs]=Jednoduchá nabídka spouštěče
