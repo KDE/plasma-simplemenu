@@ -40,7 +40,7 @@ msgstr "Na actividade actual"
 #: package/contents/code/tools.js:132
 #, kde-format
 msgid "Show In Favorites"
-msgstr "Mostrar nos favoritos"
+msgstr "Amosar nos favoritos"
 
 #: package/contents/config/config.qml:13
 #, kde-format
@@ -72,7 +72,7 @@ msgstr "Comportamento"
 #: package/contents/ui/ConfigGeneral.qml:153
 #, kde-format
 msgid "Show applications as:"
-msgstr "Mostrar as aplicacións como:"
+msgstr "Amosar as aplicacións como:"
 
 #: package/contents/ui/ConfigGeneral.qml:161
 #, kde-format
