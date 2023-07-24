@@ -73,7 +73,7 @@ msgstr "동작"
 #: package/contents/ui/ConfigGeneral.qml:153
 #, kde-format
 msgid "Show applications as:"
-msgstr "프로그램 표시 형식:"
+msgstr "앱 표시 형식:"
 
 #: package/contents/ui/ConfigGeneral.qml:161
 #, kde-format
@@ -113,7 +113,7 @@ msgstr "책갈피, 파일, 이메일에서도 찾기"
 #: package/contents/ui/main.qml:186
 #, kde-format
 msgid "Edit Applications..."
-msgstr "프로그램 편집..."
+msgstr "앱 편집..."
 
 #: package/contents/ui/MenuRepresentation.qml:173
 #, kde-format
