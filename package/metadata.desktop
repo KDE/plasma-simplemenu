@@ -40,6 +40,7 @@ Name[ta]=எளிய பட்டி
 Name[tr]=Basit Menü
 Name[uk]=Просте меню
 Name[vi]=Trình đơn đơn giản
+Name[x-test]=xxSimple Menuxx
 Name[zh_CN]=简易菜单
 Name[zh_TW]=簡易選單
 Comment=A simple launcher menu
@@ -83,6 +84,7 @@ Comment[ta]=ஒரு எளிய ஏவிப் பட்டி
 Comment[tr]=Basit bir çalıştırıcı menüsü
 Comment[uk]=Просте меню для запуску програм
 Comment[vi]=Một trình đơn khởi chạy đơn giản
+Comment[x-test]=xxA simple launcher menuxx
 Comment[zh_CN]=简易启动器菜单
 Comment[zh_TW]=簡易的啟動器選單
 
