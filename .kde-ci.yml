@@ -6,7 +6,7 @@ Dependencies:
   'require':
     'frameworks/extra-cmake-modules': '@latest'
     'frameworks/ki18n': '@latest'
-    'plasma/plasma-framework': '@latest'
+    'plasma/libplasma': '@latest'
 
 Options:
   require-passing-tests-on: [ '@all' ]
