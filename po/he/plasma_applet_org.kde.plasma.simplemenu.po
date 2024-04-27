@@ -1,0 +1,120 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the plasma-simplemenu package.
+#
+# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma-simplemenu\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-11-05 12:36+0000\n"
+"PO-Revision-Date: 2024-04-26 11:20+0300\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.5\n"
+
+#: package/contents/code/tools.js:42 package/contents/code/tools.js:141
+#, kde-format
+msgid "Remove from Favorites"
+msgstr "הסרה מהמועדפים"
+
+#: package/contents/code/tools.js:46 package/contents/code/tools.js:145
+#, kde-format
+msgid "Add to Favorites"
+msgstr "הוספה למועדפים"
+
+#: package/contents/code/tools.js:68
+#, kde-format
+msgid "On All Activities"
+msgstr "בכל הפעילויות"
+
+#: package/contents/code/tools.js:118
+#, kde-format
+msgid "On The Current Activity"
+msgstr "בפעילות נוכחית"
+
+#: package/contents/code/tools.js:132
+#, kde-format
+msgid "Show In Favorites"
+msgstr "הצגה במועדפים"
+
+#: package/contents/config/config.qml:13
+#, kde-format
+msgid "General"
+msgstr "כללי"
+
+#: package/contents/ui/ConfigGeneral.qml:42
+#, kde-format
+msgid "Icon:"
+msgstr "סמל:"
+
+#: package/contents/ui/ConfigGeneral.qml:129
+#, kde-format
+msgctxt "@item:inmenu Open icon chooser dialog"
+msgid "Choose..."
+msgstr "בחירה…"
+
+#: package/contents/ui/ConfigGeneral.qml:134
+#, kde-format
+msgctxt "@item:inmenu Reset icon to default"
+msgid "Clear Icon"
+msgstr "פינוי סמל"
+
+#: package/contents/ui/ConfigGeneral.qml:146
+#, kde-format
+msgid "Behavior"
+msgstr "התנהגות"
+
+#: package/contents/ui/ConfigGeneral.qml:153
+#, kde-format
+msgid "Show applications as:"
+msgstr "הצגת יישומים בתור:"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name only"
+msgstr "שם בלבד"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description only"
+msgstr "תיאור בלבד"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Name (Description)"
+msgstr "שם (תיאור)"
+
+#: package/contents/ui/ConfigGeneral.qml:161
+#, kde-format
+msgid "Description (Name)"
+msgstr "תיאור (שם)"
+
+#: package/contents/ui/ConfigGeneral.qml:168
+#, kde-format
+msgid "Switch categories on hover"
+msgstr "החלפת קטגוריות בריחוף"
+
+#: package/contents/ui/ConfigGeneral.qml:176
+#, kde-format
+msgid "Search"
+msgstr "חיפוש"
+
+#: package/contents/ui/ConfigGeneral.qml:184
+#, kde-format
+msgid "Expand search to bookmarks, files and emails"
+msgstr "הרחבת החיפוש לסימניות, קבצים והודעות דוא״ל"
+
+#: package/contents/ui/main.qml:186
+#, kde-format
+msgid "Edit Applications..."
+msgstr "עריכת יישומים…"
+
+#: package/contents/ui/MenuRepresentation.qml:173
+#, kde-format
+msgid "Search..."
+msgstr "חיפוש…"
