@@ -60,7 +60,7 @@ msgstr "Icona:"
 #, kde-format
 msgctxt "@item:inmenu Open icon chooser dialog"
 msgid "Choose..."
-msgstr "Tria..."
+msgstr "Tria…"
 
 #: package/contents/ui/ConfigGeneral.qml:134
 #, kde-format
@@ -116,9 +116,9 @@ msgstr "Amplia la busca a les adreces d'interés, fitxers i correus electrònics
 #: package/contents/ui/main.qml:186
 #, kde-format
 msgid "Edit Applications..."
-msgstr "Edita les aplicacions..."
+msgstr "Edita les aplicacions…"
 
 #: package/contents/ui/MenuRepresentation.qml:173
 #, kde-format
 msgid "Search..."
-msgstr "Busca..."
+msgstr "Busca…"
